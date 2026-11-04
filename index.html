@@ -3,112 +3,583 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🔒 SYSTEM LOCKED // CORRUPTED DECK</title>
+<title>SMCP Knowledge and Awareness — Research Presentation</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap');
 
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --navy: #0a1628;
+    --navy-mid: #111d35;
+    --navy-light: #162544;
+    --gold: #c9a84c;
+    --gold-light: #e0c97f;
+    --gold-dim: rgba(201,168,76,0.15);
+    --teal: #2ec4b6;
+    --teal-dim: rgba(46,196,182,0.12);
+    --white: #f4f4f6;
+    --gray: #b0b8c8;
+  }
+
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 
   html, body {
-    background: #030712;
-    font-family: 'JetBrains Mono', monospace;
-    color: #ef4444;
+    background: #060d1a;
+    font-family: 'Inter', sans-serif;
+    color: var(--white);
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 20px;
   }
 
-  .glitch-box {
-    border: 2px dashed #ef4444;
-    padding: 30px;
-    background: rgba(239, 68, 68, 0.05);
-    max-width: 600px;
-    width: 100%;
-    position: relative;
-    box-shadow: 0 0 30px rgba(239, 68, 68, 0.2);
+  /* ── TOPBAR ── */
+  .topbar {
+    position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+    background: rgba(10,22,40,0.95);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(201,168,76,0.18);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 8px 16px; height: 60px;
+    box-sizing: border-box;
+  }
+  .topbar-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px; color: var(--gold); letter-spacing: 0.5px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-right: 8px;
+  }
+  .topbar-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+  .topbar-nav { display: flex; gap: 3px; align-items: center; }
+  .topbar-nav button {
+    background: none; border: 1px solid rgba(201,168,76,0.25);
+    color: var(--gold-light); border-radius: 4px; padding: 4px 8px;
+    font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; cursor: pointer;
+    transition: all .2s;
+  }
+  .topbar-nav button:hover, .topbar-nav button.active {
+    background: var(--gold); color: var(--navy); border-color: var(--gold);
+  }
+  .fullscreen-btn {
+    background: var(--gold-dim) !important; border-color: var(--gold) !important;
+    color: var(--gold) !important; font-size: 11px !important; padding: 4px 8px !important;
+  }
+  .fullscreen-btn:hover { background: var(--gold) !important; color: var(--navy) !important; }
+  .slide-counter { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--gray); white-space: nowrap; }
+
+  /* ── DECK CONTAINER ── */
+  .deck {
+    width: 100vw; height: 100vh; overflow-y: scroll;
+    scroll-snap-type: y mandatory; scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
   }
 
-  h1 {
-    font-size: 24px;
-    letter-spacing: 2px;
-    margin-bottom: 16px;
-    text-transform: uppercase;
-    animation: flicker 0.15s infinite;
+  .slide {
+    width: 100vw; height: 100vh;
+    scroll-snap-align: start; scroll-snap-stop: always;
+    background: var(--navy); position: relative;
+    display: flex; flex-direction: column; justify-content: space-between;
+    overflow-y: auto; padding-top: 60px; box-sizing: border-box;
   }
 
-  p {
-    font-size: 13px;
-    color: #9ca3af;
-    line-height: 1.6;
-    margin-bottom: 20px;
+  .slide::after {
+    content: ''; position: absolute; width: 400px; height: 400px;
+    right: -60px; bottom: -60px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' fill='none'%3E%3Ccircle cx='100' cy='100' r='95' stroke='%23c9a84c' stroke-width='.4' opacity='.08'/%3E%3Ccircle cx='100' cy='100' r='70' stroke='%23c9a84c' stroke-width='.3' opacity='.06'/%3E%3Cline x1='100' y1='5' x2='100' y2='195' stroke='%23c9a84c' stroke-width='.3' opacity='.06'/%3E%3Cline x1='5' y1='100' x2='195' y2='100' stroke='%23c9a84c' stroke-width='.3' opacity='.06'/%3E%3Cpolygon points='100,10 106,90 100,70 94,90' fill='%23c9a84c' opacity='.07'/%3E%3Cpolygon points='100,190 94,110 100,130 106,110' fill='%23c9a84c' opacity='.05'/%3E%3C/svg%3E") no-repeat center/contain;
+    pointer-events: none; z-index: 0;
+  }
+  .slide > * { position: relative; z-index: 1; }
+
+  /* ── SLIDE HEADER & BODY ── */
+  .slide-header {
+    padding: 16px 24px 10px; border-bottom: 1px solid rgba(201,168,76,0.12);
+    display: flex; align-items: center; gap: 14px; flex-shrink: 0;
+  }
+  .slide-number {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--gold);
+    background: var(--gold-dim); padding: 3px 10px; border-radius: 20px; letter-spacing: 1px; flex-shrink: 0;
+  }
+  .slide-header h2 { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--white); line-height: 1.2; }
+  
+  .slide-body {
+    flex: 1; padding: 20px 24px; display: flex; flex-direction: column;
+    justify-content: center; align-items: flex-start; width: 100%; max-width: 1200px; margin: 0 auto;
   }
 
-  .code-stream {
-    font-size: 11px;
-    color: #b91c1c;
-    word-break: break-all;
-    max-height: 120px;
-    overflow: hidden;
-    text-align: left;
-    background: #000;
-    padding: 10px;
-    border: 1px solid #7f1d1d;
-    margin-bottom: 20px;
+  .points { list-style: none; display: flex; flex-direction: column; gap: 12px; width: 100%; }
+  .points li {
+    padding-left: 24px; position: relative; font-size: 15px; line-height: 1.45; color: rgba(244,244,246,0.92);
+  }
+  .points li::before {
+    content: ''; position: absolute; left: 0; top: 7px; width: 8px; height: 8px;
+    border-radius: 50%; border: 2px solid var(--gold); background: transparent;
+  }
+  .points li strong { color: var(--gold-light); font-weight: 600; }
+
+  .tag {
+    display: inline-block; font-size: 11px; padding: 2px 10px; border-radius: 20px;
+    font-weight: 600; letter-spacing: .5px; margin-right: 4px; margin-bottom: 2px;
+  }
+  .tag.gold { background: var(--gold-dim); color: var(--gold); }
+  .tag.teal { background: var(--teal-dim); color: var(--teal); }
+
+  /* ── TITLE SLIDE ── */
+  .slide.title-slide {
+    background: linear-gradient(160deg, var(--navy) 0%, #0e1e38 50%, #122240 100%);
+    justify-content: center; align-items: center; text-align: center; padding: 30px 20px;
+  }
+  .slide.title-slide .slide-header { display: none; }
+  .title-slide .title-top-line { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; font-weight: 600; }
+  .title-slide h1 { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 900; line-height: 1.2; color: var(--white); max-width: 900px; margin: 0 auto; }
+  .title-slide h1 span.highlight { color: var(--gold); }
+  .title-slide .subtitle { margin-top: 14px; font-size: 14px; color: var(--gray); line-height: 1.45; max-width: 750px; margin-left: auto; margin-right: auto; }
+  .title-slide .meta-row { margin-top: 20px; display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .title-slide .meta-item { font-size: 12px; color: rgba(244,244,246,0.8); display: flex; align-items: center; gap: 6px; }
+  .title-slide .meta-item .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--gold); }
+
+  .clean-grid, .clean-grid-2 { display: grid; grid-template-columns: 1fr; gap: 20px; width: 100%; }
+  .clean-col h4 { font-size: 16px; color: var(--gold); margin-bottom: 8px; font-weight: 700; }
+  .clean-col p { font-size: 14px; color: rgba(244,244,246,0.85); line-height: 1.5; }
+
+  /* ── SPEAKER NOTES & TRANSITION LINE ── */
+  .speaker-notes {
+    background: rgba(201,168,76,0.05); border-top: 1px solid rgba(201,168,76,0.12);
+    padding: 8px 24px; font-size: 12px; color: var(--gray); line-height: 1.4; flex-shrink: 0;
+  }
+  .speaker-notes strong { color: var(--gold-light); font-size: 10px; letter-spacing: 1px; text-transform: uppercase; }
+  .notes-toggle {
+    background: none; border: 1px solid rgba(201,168,76,0.25); color: var(--gold-light);
+    padding: 3px 10px; border-radius: 4px; font-size: 10px; font-weight: 600; cursor: pointer;
+    margin-left: 24px; margin-bottom: 4px; margin-top: 2px; transition: all .2s; display: inline-block; flex-shrink: 0;
+  }
+  .notes-toggle:hover { background: var(--gold); color: var(--navy); }
+  .speaker-notes.hidden { display: none; }
+
+  .transition-line {
+    padding: 4px 24px 8px; font-size: 12px; color: var(--teal); font-style: italic;
+    border-top: 1px dashed rgba(46,196,182,0.2); margin-top: auto; flex-shrink: 0;
+  }
+  .transition-line::before { content: '→ '; }
+
+  /* ── CORRUPTION OVERLAY ── */
+  .corrupt-overlay {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: #030712; color: #ef4444; font-family: 'JetBrains Mono', monospace;
+    z-index: 99999; display: flex; flex-direction: column; align-items: center;
+    justify-content: center; text-align: center; padding: 20px;
+    box-sizing: border-box; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+  }
+  .corrupt-overlay.active { opacity: 1; pointer-events: all; }
+  .corrupt-overlay::before {
+    content: " "; display: block; position: absolute; top: 0; left: 0; bottom: 0; right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    z-index: 2; background-size: 100% 3px, 6px 100%; pointer-events: none;
+  }
+  .corrupt-card {
+    border: 2px dashed #ef4444; padding: 30px; background: rgba(239, 68, 68, 0.05);
+    max-width: 650px; width: 100%; box-shadow: 0 0 40px rgba(239, 68, 68, 0.3);
+    position: relative; z-index: 3;
+  }
+  .corrupt-card h1 {
+    font-size: 22px; letter-spacing: 2px; margin-bottom: 14px; text-transform: uppercase;
+    animation: glitchFlicker 0.15s infinite;
+  }
+  .corrupt-card p { font-size: 13px; color: #9ca3af; line-height: 1.6; margin-bottom: 20px; }
+  .corrupt-stream {
+    font-size: 11px; color: #dc2626; text-align: left; background: #000;
+    padding: 12px; border: 1px solid #7f1d1d; margin-bottom: 20px; max-height: 120px;
+    overflow: hidden; line-height: 1.5; word-break: break-all;
+  }
+  .restore-btn {
+    background: #ef4444; color: #030712; font-family: 'JetBrains Mono', monospace;
+    font-weight: 700; font-size: 12px; padding: 10px 20px; border: none; cursor: pointer;
+    letter-spacing: 1px; transition: all 0.2s;
+  }
+  .restore-btn:hover { background: #f87171; }
+
+  @keyframes glitchFlicker {
+    0% { opacity: 1; transform: translate(0,0); }
+    50% { opacity: 0.7; transform: translate(-1px, 1px); }
+    100% { opacity: 1; transform: translate(0,0); }
   }
 
-  .status-badge {
-    background: #ef4444;
-    color: #030712;
-    font-weight: 700;
-    padding: 6px 14px;
-    font-size: 12px;
-    display: inline-block;
-    letter-spacing: 1px;
-  }
-
-  @keyframes flicker {
-    0% { opacity: 1; }
-    50% { opacity: 0.4; }
-    100% { opacity: 1; }
+  @media (min-width: 768px) {
+    .topbar { padding: 10px 28px; height: 64px; }
+    .topbar-brand { font-size: 15px; }
+    .topbar-nav button { padding: 5px 11px; font-size: 12px; }
+    .fullscreen-btn { font-size: 12px !important; padding: 5px 12px !important; }
+    .slide { padding-top: 64px; }
+    .slide-header { padding: 20px 56px 12px; }
+    .slide-header h2 { font-size: 26px; }
+    .slide-body { padding: 24px 56px; }
+    .points li { font-size: 17px; }
+    .title-slide h1 { font-size: 38px; }
+    .title-slide .subtitle { font-size: 16px; }
+    .clean-grid { grid-template-columns: 1fr 1fr 1fr; gap: 32px; }
+    .clean-grid-2 { grid-template-columns: 1fr 1fr; gap: 40px; }
+    .clean-col h4 { font-size: 18px; }
+    .clean-col p { font-size: 15px; }
+    .speaker-notes { padding: 10px 56px; font-size: 13px; }
+    .notes-toggle { margin-left: 56px; font-size: 11px; padding: 4px 12px; }
+    .transition-line { padding: 6px 56px 10px; font-size: 13px; }
   }
 </style>
 </head>
 <body>
 
-<div class="glitch-box">
-  <h1>⚠ CRITICAL ERROR: PRESENTATION CORRUPTED</h1>
-  <p>The presentation engine has been disabled by security protocols. File execution halted. Memory addresses unreadable.</p>
-  
-  <div class="code-stream">
-    ERR_DECK_RENDER_FAIL [0x8007000E] -> MEMORY_ACCESS_VIOLATION<br>
-    &gt; STCW_SMCP_MODULE_LOCKED<br>
-    &gt; BYPASS_ATTEMPT_DENIED<br>
-    &gt; NULL_POINTER_EXCEPTION AT 0x004F2A1C<br>
-    &gt; CORRUPTING SECTOR 0xFF... 001010110101...
+<div class="topbar">
+  <div class="topbar-brand">⚓ SMCP Research Presentation</div>
+  <div class="topbar-right">
+    <div class="topbar-nav" id="topbarNav">
+      <button onclick="scrollToSlide(1)" class="active">1</button>
+      <button onclick="scrollToSlide(2)">2</button>
+      <button onclick="scrollToSlide(3)">3</button>
+      <button onclick="scrollToSlide(4)">4</button>
+      <button onclick="scrollToSlide(5)">5</button>
+      <button onclick="scrollToSlide(6)">6</button>
+      <button onclick="scrollToSlide(7)">7</button>
+      <button onclick="scrollToSlide(8)">8</button>
+    </div>
+    <button onclick="toggleFullscreen()" class="fullscreen-btn" id="fsBtn">⛶ Full</button>
+    <span class="slide-counter"><span id="currentSlide">1</span>/8</span>
+  </div>
+</div>
+
+<div class="deck" id="deckContainer">
+
+  <!-- SLIDE 1 -->
+  <div class="slide title-slide" id="slide1">
+    <div class="title-top-line">Chapter 1 &nbsp;·&nbsp; Pre-Proposal Defense</div>
+    <h1><span class="highlight">SMCP Knowledge &amp; Awareness</span><br>Among 3rd-Year BSMT Students at UCLM</h1>
+    <p class="subtitle">Assessing the level of knowledge and awareness of IMO Standard Marine Communication Phrases among third-year Bachelor of Science in Marine Transportation students at the University of Cebu Lapu-Lapu and Mandaue</p>
+    <div class="meta-row">
+      <span class="meta-item"><span class="dot"></span>UCLM CME</span>
+      <span class="meta-item"><span class="dot"></span>BSMT Section Mike (2M)</span>
+      <span class="meta-item"><span class="dot"></span>AY 2026–2027</span>
+    </div>
+    <button class="notes-toggle" onclick="toggleNotes(this)">Show Speaker Notes</button>
+    <div class="speaker-notes hidden">
+      <strong>Speaker Notes:</strong> Good day panel members and instructors. Today, I am presenting our Chapter 1 pre-proposal focusing on the SMCP knowledge and awareness of third-year BSMT students at UCLM for Academic Year 2026-2027.
+    </div>
   </div>
 
-  <div class="status-badge">STATUS: OFFLINE // UNREADABLE</div>
+  <!-- SLIDE 2 -->
+  <div class="slide" id="slide2">
+    <div class="slide-header">
+      <span class="slide-number">02</span>
+      <h2>Introduction: Communication in Global Maritime Operations</h2>
+    </div>
+    <div class="slide-body">
+      <ul class="points">
+        <li>Seafarers from <strong>diverse cultural and linguistic backgrounds</strong> work side by side on international vessels.</li>
+        <li>Language misunderstandings <strong>directly link to unsafe operational situations</strong> in mixed-nationality crews <span class="tag gold">Nævestad et al., 2023</span>.</li>
+        <li>Maritime English coordinates <strong>routine exchanges, safety, distress, and urgency</strong> situations <span class="tag teal">Sartini et al., 2025</span>.</li>
+        <li><strong>Standardized phraseology</strong> is required to eliminate ambiguity during safety-critical exchanges at sea.</li>
+      </ul>
+    </div>
+    <div class="transition-line">This operational reality is governed by strict international and local regulatory frameworks.</div>
+    <button class="notes-toggle" onclick="toggleNotes(this)">Show Speaker Notes</button>
+    <div class="speaker-notes hidden">
+      <strong>Speaker Notes:</strong> Maritime operations unfold in an international environment where language barriers create severe safety risks. Standardized communication is vital to prevent bridge miscommunication.
+    </div>
+  </div>
+
+  <!-- SLIDE 3 -->
+  <div class="slide" id="slide3">
+    <div class="slide-header">
+      <span class="slide-number">03</span>
+      <h2>Regulatory Foundations &amp; The Role of IMO SMCP</h2>
+    </div>
+    <div class="slide-body">
+      <ul class="points">
+        <li>Adopted via <strong>IMO Resolution A.918(22)</strong> in 2001 to enhance navigational safety and standardize ship communications.</li>
+        <li>Structured phraseology specifically engineered to <strong>prevent ambiguity</strong> in multilingual environments.</li>
+        <li>Linked directly to <strong>STCW competencies</strong> required for officers in charge of a navigational watch.</li>
+        <li>Codified locally under <strong>Joint CHED-MARINA Memorandum Circular No. 01, Series of 2023</strong>.</li>
+      </ul>
+    </div>
+    <div class="transition-line">To measure this effectively, the study relies on established linguistic and educational theories.</div>
+    <button class="notes-toggle" onclick="toggleNotes(this)">Show Speaker Notes</button>
+    <div class="speaker-notes hidden">
+      <strong>Speaker Notes:</strong> The IMO established SMCP through Resolution A.918(22). This is formally integrated into STCW standards and enforced locally through Joint CHED-MARINA MC No. 01 Series of 2023.
+    </div>
+  </div>
+
+  <!-- SLIDE 4 -->
+  <div class="slide" id="slide4">
+    <div class="slide-header">
+      <span class="slide-number">04</span>
+      <h2>Theoretical Framework &amp; Communicative Competence</h2>
+    </div>
+    <div class="slide-body">
+      <ul class="points">
+        <li>Anchored on <strong>Canale &amp; Swain's (1980) Communicative Competence Theory</strong> and <strong>Celce-Murcia's (2007)</strong> model.</li>
+        <li><span class="tag gold">Grammatical</span> Knowledge of vocabulary, morphology, and syntax.</li>
+        <li><span class="tag gold">Sociolinguistic</span> Understanding social context and safety purpose.</li>
+        <li><span class="tag teal">Discourse</span> Coherent operational text exchanges.</li>
+        <li><span class="tag teal">Strategic</span> Compensatory repair strategies under pressure.</li>
+      </ul>
+    </div>
+    <div class="transition-line">From these theoretical foundations, we move to the core research variables and problem structure.</div>
+    <button class="notes-toggle" onclick="toggleNotes(this)">Show Speaker Notes</button>
+    <div class="speaker-notes hidden">
+      <strong>Speaker Notes:</strong> Our study anchors on Canale and Swain's Communicative Competence theory, linking grammatical and strategic language skills directly to safe ship handling and error recovery.
+    </div>
+  </div>
+
+  <!-- SLIDE 5 -->
+  <div class="slide" id="slide5">
+    <div class="slide-header">
+      <span class="slide-number">05</span>
+      <h2>Statement of the Problem: Knowledge Domains</h2>
+    </div>
+    <div class="slide-body">
+      <p style="font-size:15px;color:var(--gray);margin-bottom:12px;line-height:1.4;">
+        <strong style="color:var(--white);">Research Question 1:</strong> What is the level of <em>knowledge</em> of third-year BSMT students regarding SMCP?
+      </p>
+      <ul class="points">
+        <li><span class="tag gold">1.1</span> <strong>Purpose &amp; Function</strong> — Understanding why SMCP exists and its intended role in maritime safety.</li>
+        <li><span class="tag gold">1.2</span> <strong>Meaning &amp; Recognition</strong> — Ability to identify and interpret selected standard maritime phrases.</li>
+        <li><span class="tag gold">1.3</span> <strong>Terminology</strong> — Familiarity with specialized vocabulary, instructions, and warnings.</li>
+        <li><span class="tag gold">1.4</span> <strong>Situational Application</strong> — Correct application of SMCP in basic operational scenarios.</li>
+      </ul>
+    </div>
+    <div class="transition-line">Alongside objective knowledge, the study evaluates student self-reported awareness constructs.</div>
+    <button class="notes-toggle" onclick="toggleNotes(this)">Show Speaker Notes</button>
+    <div class="speaker-notes hidden">
+      <strong>Speaker Notes:</strong> The first part of our problem statement evaluates objective knowledge across four domains: purpose, phrase recognition, technical terminology, and situational bridge application.
+    </div>
+  </div>
+
+  <!-- SLIDE 6 -->
+  <div class="slide" id="slide6">
+    <div class="slide-header">
+      <span class="slide-number">06</span>
+      <h2>Statement of the Problem: Awareness Constructs</h2>
+    </div>
+    <div class="slide-body">
+      <p style="font-size:15px;color:var(--gray);margin-bottom:12px;line-height:1.4;">
+        <strong style="color:var(--white);">Research Question 2:</strong> What is the level of <em>awareness</em> of third-year BSMT students regarding SMCP?
+      </p>
+      <ul class="points">
+        <li><span class="tag teal">2.1</span> <strong>Role in Standardization</strong> — Perceived awareness of SMCP's function across multilingual bridge teams.</li>
+        <li><span class="tag teal">2.2</span> <strong>Safety Relevance</strong> — Recognition of direct links to safe navigational communication and error prevention.</li>
+        <li><span class="tag teal">2.3</span> <strong>Shipboard Responsibilities</strong> — Understanding professional relevance to upcoming watchkeeping duties.</li>
+      </ul>
+    </div>
+    <div class="transition-line">To ensure clarity and precision, the scope, boundaries, and terms of the study are strictly defined.</div>
+    <button class="notes-toggle" onclick="toggleNotes(this)">Show Speaker Notes</button>
+    <div class="speaker-notes hidden">
+      <strong>Speaker Notes:</strong> The second part of the problem statement assesses awareness—measuring how well cadets perceive the importance of standardization, safety, and their upcoming shipboard responsibilities.
+    </div>
+  </div>
+
+  <!-- SLIDE 7 -->
+  <div class="slide" id="slide7">
+    <div class="slide-header">
+      <span class="slide-number">07</span>
+      <h2>Scope, Delimitations, and Definition of Terms</h2>
+    </div>
+    <div class="slide-body">
+      <div class="clean-grid-2">
+        <div class="clean-col">
+          <h4>Scope &amp; Delimitations</h4>
+          <ul class="points" style="gap:8px;">
+            <li><strong>Population:</strong> Enrolled 3rd-year BSMT students at UCLM for AY 2026–2027.</li>
+            <li><strong>Methodology:</strong> Assesses cognitive understanding via written test instruments.</li>
+            <li><strong>Exclusion:</strong> Excludes live acoustic transmission or simulator voice evaluation.</li>
+          </ul>
+        </div>
+        <div class="clean-col">
+          <h4>Operational Terms</h4>
+          <ul class="points" style="gap:8px;">
+            <li><strong>Knowledge:</strong> Objective score on test domains.</li>
+            <li><strong>Awareness:</strong> 4-point Likert scale self-reporting.</li>
+            <li><strong>SMCP:</strong> Standard safety language under IMO Resolution A.918(22).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="transition-line">Finally, we review the practical significance and stakeholder benefits of these findings.</div>
+    <button class="notes-toggle" onclick="toggleNotes(this)">Show Speaker Notes</button>
+    <div class="speaker-notes hidden">
+      <strong>Speaker Notes:</strong> Our scope focuses exclusively on third-year BSMT cadets at UCLM via written instruments, setting aside live simulator tests. Key terms are operationally defined.
+    </div>
+  </div>
+
+  <!-- SLIDE 8 -->
+  <div class="slide" id="slide8">
+    <div class="slide-header">
+      <span class="slide-number">08</span>
+      <h2>Significance of the Study &amp; Practical Implications</h2>
+    </div>
+    <div class="slide-body">
+      <div class="clean-grid">
+        <div class="clean-col">
+          <h4>BSMT Students</h4>
+          <p>Provides objective self-assessment data prior to mandatory shipboard cadetship.</p>
+        </div>
+        <div class="clean-col">
+          <h4>Faculty &amp; Instructors</h4>
+          <p>Supplies diagnostic data to refine simulation scripts and bridge theory to practice.</p>
+        </div>
+        <div class="clean-col">
+          <h4>Administration &amp; Industry</h4>
+          <p>Serves as baseline evidence for curriculum review and ensures safer multi-ethnic bridge teams.</p>
+        </div>
+      </div>
+    </div>
+    <div class="transition-line">Thank you for your attention. We are ready for your questions and suggestions.</div>
+    <button class="notes-toggle" onclick="toggleNotes(this)">Show Speaker Notes</button>
+    <div class="speaker-notes hidden">
+      <strong>Speaker Notes:</strong> The study benefits students through self-assessment, faculty through instructional refinement, UCLM administration through empirical curriculum review, and manning agencies through better-prepared cadets.
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════ CORRUPTION SCREEN OVERLAY ═══════════ -->
+<div class="corrupt-overlay" id="corruptOverlay">
+  <div class="corrupt-card">
+    <h1>⚠ CRITICAL SYSTEM ERROR: SYSTEM CORRUPTED</h1>
+    <p>A fatal communication breakdown was detected in memory buffer [0x004F2A]. Navigational presentation stream has been locked by security watchdog.</p>
+    
+    <div class="corrupt-stream">
+      ERR_SYSTEM_CORRUPTED [0x8007000E] -> MEMORY_ACCESS_VIOLATION<br>
+      &gt; STCW_SMCP_MODULE_LOCKED<br>
+      &gt; SYSTEM TIMEOUT (60s EXPIRED)<br>
+      &gt; NULL_POINTER_EXCEPTION AT 0x004F2A1C<br>
+      &gt; UNABLE_TO_READ_SLIDE_FRAME... 001010110101
+    </div>
+
+    <button class="restore-btn" onclick="restoreDeck()">⚙ OVERRIDE &amp; RESTORE DECK (R / Esc)</button>
+  </div>
 </div>
 
 <script>
-  // Completely break keyboard and click functionality to make it "not working"
+  let currentSlideIndex = 1;
+  const totalSlides = 8;
+  let isCorrupted = false;
+
+  // 1 Minute (60 seconds) timer without any visible countdown UI
+  setTimeout(() => {
+    triggerCorruption();
+  }, 60000);
+
+  function triggerCorruption() {
+    if (isCorrupted) return;
+    isCorrupted = true;
+    document.getElementById('corruptOverlay').classList.add('active');
+    document.title = "💥 CRITICAL SYSTEM ERROR";
+
+    // Play subtle glitch sound via Web Audio API
+    try {
+      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(110, audioCtx.currentTime);
+      gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.4);
+    } catch(e){}
+  }
+
+  function restoreDeck() {
+    isCorrupted = false;
+    document.getElementById('corruptOverlay').classList.remove('active');
+    document.title = "SMCP Knowledge and Awareness — Research Presentation";
+  }
+
+  function toggleNotes(btn) {
+    const notes = btn.nextElementSibling;
+    if(notes.classList.contains('hidden')) {
+      notes.classList.remove('hidden');
+      btn.textContent = 'Hide Notes';
+    } else {
+      notes.classList.add('hidden');
+      btn.textContent = 'Show Speaker Notes';
+    }
+  }
+
+  function scrollToSlide(num) {
+    if(isCorrupted) return;
+    currentSlideIndex = num;
+    const el = document.getElementById('slide' + num);
+    if(el) el.scrollIntoView({behavior: 'smooth'});
+  }
+
+  function toggleFullscreen() {
+    const fsBtn = document.getElementById('fsBtn');
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().then(() => {
+        fsBtn.textContent = 'Exit FS';
+      }).catch(err => {});
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen().then(() => {
+          const isMobile = window.innerWidth < 768;
+          fsBtn.textContent = isMobile ? '⛶ FS' : '⛶ Full';
+        });
+      }
+    }
+  }
+
+  // Keyboard navigation & Emergency Restore Controls (R or Esc)
   window.addEventListener('keydown', (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    alert("❌ ACCESS DENIED: Presentation engine is offline.");
+    if (e.key === 'r' || e.key === 'R' || e.key === 'Escape') {
+      restoreDeck();
+      return;
+    }
+    if (isCorrupted) {
+      e.preventDefault();
+      return;
+    }
+    if (e.key === 'f' || e.key === 'F') {
+      toggleFullscreen();
+    } else if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === 'ArrowRight') {
+      e.preventDefault();
+      if (currentSlideIndex < totalSlides) scrollToSlide(currentSlideIndex + 1);
+    } else if (e.key === 'ArrowUp' || e.key === 'PageUp' || e.key === 'ArrowLeft') {
+      e.preventDefault();
+      if (currentSlideIndex > 1) scrollToSlide(currentSlideIndex - 1);
+    }
   });
 
-  window.addEventListener('click', (e) => {
-    e.preventDefault();
-    document.title = "💥 SYSTEM CRASHED";
+  // Hidden Triple-Click Action to restore deck anytime
+  let clickCount = 0;
+  let clickTimer = null;
+  window.addEventListener('click', () => {
+    clickCount++;
+    if (clickCount === 1) {
+      clickTimer = setTimeout(() => { clickCount = 0; }, 500);
+    } else if (clickCount >= 3) {
+      clearTimeout(clickTimer);
+      clickCount = 0;
+      restoreDeck();
+    }
+  });
+
+  // Track scroll position to update navigation state
+  const deckContainer = document.getElementById('deckContainer');
+  const slides = document.querySelectorAll('.slide');
+  const counterEl = document.getElementById('currentSlide');
+
+  deckContainer.addEventListener('scroll', () => {
+    let index = 0;
+    slides.forEach((slide, i) => {
+      const rect = slide.getBoundingClientRect();
+      if(rect.top <= 100 && rect.bottom >= 100) index = i + 1;
+    });
+    if(index > 0) {
+      currentSlideIndex = index;
+      counterEl.textContent = index;
+      document.querySelectorAll('.topbar-nav button').forEach((btn, i) => {
+        if(i + 1 === index) btn.classList.add('active');
+        else btn.classList.remove('active');
+      });
+    }
   });
 </script>
-
 </body>
 </html>
