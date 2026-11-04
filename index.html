@@ -38,30 +38,30 @@
     backdrop-filter: blur(14px);
     border-bottom: 1px solid rgba(201,168,76,0.18);
     display: flex; align-items: center; justify-content: space-between;
-    padding: 10px 24px; height: 60px;
+    padding: 8px 16px; height: 60px;
     box-sizing: border-box;
   }
   .topbar-brand {
     font-family: 'Playfair Display', serif;
-    font-size: 15px; color: var(--gold); letter-spacing: 1px;
+    font-size: 13px; color: var(--gold); letter-spacing: 0.5px;
     flex-shrink: 0;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    margin-right: 12px;
+    margin-right: 8px;
   }
   .topbar-right {
-    display: flex; align-items: center; gap: 12px;
+    display: flex; align-items: center; gap: 8px;
     flex-shrink: 0;
   }
   .topbar-nav { 
-    display: flex; gap: 4px; align-items: center; 
+    display: flex; gap: 3px; align-items: center; 
     flex-shrink: 0;
   }
   .topbar-nav button {
     background: none; border: 1px solid rgba(201,168,76,0.25);
-    color: var(--gold-light); border-radius: 6px; padding: 4px 10px;
-    font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; cursor: pointer;
+    color: var(--gold-light); border-radius: 4px; padding: 4px 8px;
+    font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; cursor: pointer;
     transition: all .2s;
   }
   .topbar-nav button:hover, .topbar-nav button.active {
@@ -71,7 +71,8 @@
     background: var(--gold-dim) !important;
     border-color: var(--gold) !important;
     color: var(--gold) !important;
-    flex-shrink: 0;
+    font-size: 11px !important;
+    padding: 4px 8px !important;
   }
   .fullscreen-btn:hover {
     background: var(--gold) !important;
@@ -79,7 +80,7 @@
   }
   .slide-counter {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 12px; color: var(--gray);
+    font-size: 11px; color: var(--gray);
     flex-shrink: 0;
     white-space: nowrap;
   }
@@ -91,6 +92,7 @@
     overflow-y: scroll;
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
   }
 
   .slide {
@@ -103,16 +105,17 @@
     display: flex; 
     flex-direction: column;
     justify-content: space-between;
-    overflow: hidden;
+    overflow-y: auto;
     padding-top: 60px;
+    box-sizing: border-box;
   }
 
   /* Watermark compass */
   .slide::after {
     content: '';
     position: absolute;
-    width: 500px; height: 500px;
-    right: -80px; bottom: -80px;
+    width: 400px; height: 400px;
+    right: -60px; bottom: -60px;
     background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' fill='none'%3E%3Ccircle cx='100' cy='100' r='95' stroke='%23c9a84c' stroke-width='.4' opacity='.08'/%3E%3Ccircle cx='100' cy='100' r='70' stroke='%23c9a84c' stroke-width='.3' opacity='.06'/%3E%3Cline x1='100' y1='5' x2='100' y2='195' stroke='%23c9a84c' stroke-width='.3' opacity='.06'/%3E%3Cline x1='5' y1='100' x2='195' y2='100' stroke='%23c9a84c' stroke-width='.3' opacity='.06'/%3E%3Cpolygon points='100,10 106,90 100,70 94,90' fill='%23c9a84c' opacity='.07'/%3E%3Cpolygon points='100,190 94,110 100,130 106,110' fill='%23c9a84c' opacity='.05'/%3E%3C/svg%3E") no-repeat center/contain;
     pointer-events: none;
     z-index: 0;
@@ -122,22 +125,22 @@
 
   /* ── SLIDE HEADER BAR ── */
   .slide-header {
-    padding: 20px 56px 12px;
+    padding: 16px 24px 10px;
     border-bottom: 1px solid rgba(201,168,76,0.12);
-    display: flex; align-items: center; gap: 20px;
+    display: flex; align-items: center; gap: 14px;
     flex-shrink: 0;
   }
   .slide-number {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 12px; color: var(--gold);
+    font-size: 11px; color: var(--gold);
     background: var(--gold-dim);
-    padding: 4px 12px; border-radius: 20px;
-    letter-spacing: 1.5px;
+    padding: 3px 10px; border-radius: 20px;
+    letter-spacing: 1px;
     flex-shrink: 0;
   }
   .slide-header h2 {
     font-family: 'Playfair Display', serif;
-    font-size: 26px; font-weight: 700;
+    font-size: 20px; font-weight: 700;
     color: var(--white);
     line-height: 1.2;
   }
@@ -145,27 +148,26 @@
   /* ── SLIDE BODY ── */
   .slide-body {
     flex: 1; 
-    padding: 24px 56px;
+    padding: 20px 24px;
     display: flex; 
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
     width: 100%;
-    max-width: 1300px;
+    max-width: 1200px;
     margin: 0 auto;
-    overflow: hidden;
   }
 
   /* ── BULLET LIST ── */
-  .points { list-style: none; display: flex; flex-direction: column; gap: 16px; width: 100%; }
+  .points { list-style: none; display: flex; flex-direction: column; gap: 12px; width: 100%; }
   .points li {
-    padding-left: 28px; position: relative;
-    font-size: 18px; line-height: 1.5;
+    padding-left: 24px; position: relative;
+    font-size: 15px; line-height: 1.45;
     color: rgba(244,244,246,0.92);
   }
   .points li::before {
-    content: ''; position: absolute; left: 0; top: 9px;
-    width: 10px; height: 10px; border-radius: 50%;
+    content: ''; position: absolute; left: 0; top: 7px;
+    width: 8px; height: 8px; border-radius: 50%;
     border: 2px solid var(--gold);
     background: transparent;
   }
@@ -173,10 +175,10 @@
 
   /* ── BADGE / TAG ── */
   .tag {
-    display: inline-block; font-size: 12px;
-    padding: 3px 12px; border-radius: 20px;
+    display: inline-block; font-size: 11px;
+    padding: 2px 10px; border-radius: 20px;
     font-weight: 600; letter-spacing: .5px;
-    margin-right: 6px; margin-bottom: 4px;
+    margin-right: 4px; margin-bottom: 2px;
   }
   .tag.gold { background: var(--gold-dim); color: var(--gold); }
   .tag.teal { background: var(--teal-dim); color: var(--teal); }
@@ -185,85 +187,108 @@
   .slide.title-slide {
     background: linear-gradient(160deg, var(--navy) 0%, #0e1e38 50%, #122240 100%);
     justify-content: center; align-items: center; text-align: center;
-    padding: 40px 80px;
+    padding: 30px 20px;
   }
   .slide.title-slide .slide-header { display: none; }
-  .slide.title-slide::after { right: -60px; bottom: -60px; width: 600px; height: 600px; opacity: .6; }
+  .slide.title-slide::after { right: -40px; bottom: -40px; width: 500px; height: 500px; opacity: .5; }
   .title-slide .title-top-line {
-    font-size: 13px; letter-spacing: 4px; text-transform: uppercase;
-    color: var(--gold); margin-bottom: 16px; font-weight: 600;
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 12px; font-weight: 600;
   }
   .title-slide h1 {
-    font-family: 'Playfair Display', serif; font-size: 42px; font-weight: 900;
-    line-height: 1.2; color: var(--white); max-width: 1000px;
+    font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 900;
+    line-height: 1.2; color: var(--white); max-width: 900px; margin: 0 auto;
   }
   .title-slide h1 span.highlight { color: var(--gold); }
   .title-slide .subtitle {
-    margin-top: 18px; font-size: 18px; color: var(--gray);
-    line-height: 1.5; max-width: 850px;
+    margin-top: 14px; font-size: 14px; color: var(--gray);
+    line-height: 1.45; max-width: 750px; margin-left: auto; margin-right: auto;
   }
   .title-slide .meta-row {
-    margin-top: 28px; display: flex; gap: 24px; justify-content: center; flex-wrap: wrap;
+    margin-top: 20px; display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
   }
   .title-slide .meta-item {
-    font-size: 14px; color: rgba(244,244,246,0.8);
-    display: flex; align-items: center; gap: 7px;
+    font-size: 12px; color: rgba(244,244,246,0.8);
+    display: flex; align-items: center; gap: 6px;
   }
-  .title-slide .meta-item .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); }
+  .title-slide .meta-item .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--gold); }
 
   /* ── CLEAN STACKED GRID FOR MULTI-COLUMN SECTIONS (NO CARDS) ── */
   .clean-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 32px;
+    grid-template-columns: 1fr;
+    gap: 20px;
     width: 100%;
   }
   .clean-grid-2 {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 48px;
+    grid-template-columns: 1fr;
+    gap: 20px;
     width: 100%;
   }
   .clean-col h4 {
-    font-size: 18px;
+    font-size: 16px;
     color: var(--gold);
-    margin-bottom: 12px;
+    margin-bottom: 8px;
     font-weight: 700;
   }
   .clean-col p {
-    font-size: 16px;
+    font-size: 14px;
     color: rgba(244,244,246,0.85);
-    line-height: 1.6;
+    line-height: 1.5;
   }
 
   /* ── SPEAKER NOTES ── */
   .speaker-notes {
     background: rgba(201,168,76,0.05);
     border-top: 1px solid rgba(201,168,76,0.12);
-    padding: 10px 56px;
-    font-size: 13px; color: var(--gray); line-height: 1.5;
+    padding: 8px 24px;
+    font-size: 12px; color: var(--gray); line-height: 1.4;
     flex-shrink: 0;
   }
-  .speaker-notes strong { color: var(--gold-light); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
+  .speaker-notes strong { color: var(--gold-light); font-size: 10px; letter-spacing: 1px; text-transform: uppercase; }
   .notes-toggle {
     background: none; border: 1px solid rgba(201,168,76,0.25); color: var(--gold-light);
-    padding: 4px 12px; border-radius: 5px; font-size: 11px; font-weight: 600; cursor: pointer;
-    margin-left: 56px; margin-bottom: 4px; margin-top: 2px; transition: all .2s;
+    padding: 3px 10px; border-radius: 4px; font-size: 10px; font-weight: 600; cursor: pointer;
+    margin-left: 24px; margin-bottom: 4px; margin-top: 2px; transition: all .2s;
     flex-shrink: 0;
+    display: inline-block;
   }
   .notes-toggle:hover { background: var(--gold); color: var(--navy); }
   .speaker-notes.hidden { display: none; }
 
   /* ── TRANSITION LINE ── */
   .transition-line {
-    padding: 6px 56px 10px;
-    font-size: 13px; color: var(--teal);
+    padding: 4px 24px 8px;
+    font-size: 12px; color: var(--teal);
     font-style: italic;
     border-top: 1px dashed rgba(46,196,182,0.2);
     margin-top: auto;
     flex-shrink: 0;
   }
   .transition-line::before { content: '→ '; }
+
+  /* ── DESKTOP MEDIA QUERY (Screens wider than 768px) ── */
+  @media (min-width: 768px) {
+    .topbar { padding: 10px 28px; height: 64px; }
+    .topbar-brand { font-size: 15px; }
+    .topbar-nav button { padding: 5px 11px; font-size: 12px; }
+    .fullscreen-btn { font-size: 12px !important; padding: 5px 12px !important; }
+    .slide { padding-top: 64px; }
+    .slide-header { padding: 20px 56px 12px; }
+    .slide-header h2 { font-size: 26px; }
+    .slide-body { padding: 24px 56px; }
+    .points li { font-size: 17px; }
+    .title-slide h1 { font-size: 38px; }
+    .title-slide .subtitle { font-size: 16px; }
+    .clean-grid { grid-template-columns: 1fr 1fr 1fr; gap: 32px; }
+    .clean-grid-2 { grid-template-columns: 1fr 1fr; gap: 40px; }
+    .clean-col h4 { font-size: 18px; }
+    .clean-col p { font-size: 15px; }
+    .speaker-notes { padding: 10px 56px; font-size: 13px; }
+    .notes-toggle { margin-left: 56px; font-size: 11px; padding: 4px 12px; }
+    .transition-line { padding: 6px 56px 10px; font-size: 13px; }
+  }
 </style>
 </head>
 <body>
@@ -272,7 +297,7 @@
 <div class="topbar">
   <div class="topbar-brand">⚓ SMCP Research Presentation</div>
   <div class="topbar-right">
-    <div class="topbar-nav">
+    <div class="topbar-nav" id="topbarNav">
       <button onclick="scrollToSlide(1)" class="active" id="btn1">1</button>
       <button onclick="scrollToSlide(2)" id="btn2">2</button>
       <button onclick="scrollToSlide(3)" id="btn3">3</button>
@@ -282,8 +307,8 @@
       <button onclick="scrollToSlide(7)" id="btn7">7</button>
       <button onclick="scrollToSlide(8)" id="btn8">8</button>
     </div>
-    <button onclick="toggleFullscreen()" class="fullscreen-btn" id="fsBtn">⛶ Fullscreen</button>
-    <span class="slide-counter">Slide <span id="currentSlide">1</span> / 8</span>
+    <button onclick="toggleFullscreen()" class="fullscreen-btn" id="fsBtn">⛶ Full</button>
+    <span class="slide-counter"><span id="currentSlide">1</span>/8</span>
   </div>
 </div>
 
@@ -293,25 +318,16 @@
 <!-- SLIDE 1 — TITLE -->
 <!-- ══════════════════════════════════════════════════════════════ -->
 <div class="slide title-slide" id="slide1">
-  <svg width="80" height="80" viewBox="0 0 200 200" fill="none" style="margin-bottom:10px;opacity:.5">
-    <circle cx="100" cy="100" r="92" stroke="#c9a84c" stroke-width="1.2"/>
-    <circle cx="100" cy="100" r="78" stroke="#c9a84c" stroke-width=".6" opacity=".5"/>
-    <circle cx="100" cy="100" r="4" fill="#c9a84c"/>
-    <line x1="100" y1="12" x2="100" y2="188" stroke="#c9a84c" stroke-width=".6" opacity=".4"/>
-    <line x1="12" y1="100" x2="188" y2="100" stroke="#c9a84c" stroke-width=".6" opacity=".4"/>
-    <polygon points="100,14 107,80 100,68 93,80" fill="#c9a84c" opacity=".7"/>
-  </svg>
-
   <div class="title-top-line">Chapter 1 &nbsp;·&nbsp; Pre-Proposal Defense</div>
   <h1><span class="highlight">SMCP Knowledge &amp; Awareness</span><br>Among 3rd-Year BSMT Students at UCLM</h1>
   <p class="subtitle">Assessing the level of knowledge and awareness of IMO Standard Marine Communication Phrases among third-year Bachelor of Science in Marine Transportation students at the University of Cebu Lapu-Lapu and Mandaue</p>
   <div class="meta-row">
-    <span class="meta-item"><span class="dot"></span>UCLM College of Maritime Education</span>
+    <span class="meta-item"><span class="dot"></span>UCLM CME</span>
     <span class="meta-item"><span class="dot"></span>BSMT Section Mike (2M)</span>
-    <span class="meta-item"><span class="dot"></span>Academic Year 2026 – 2027</span>
+    <span class="meta-item"><span class="dot"></span>AY 2026–2027</span>
   </div>
 
-  <button class="notes-toggle" onclick="toggleNotes(this)" style="margin-top:20px;">Show Speaker Notes</button>
+  <button class="notes-toggle" onclick="toggleNotes(this)">Show Speaker Notes</button>
   <div class="speaker-notes hidden">
     <strong>Speaker Notes:</strong> Good day panel members and instructors. Today, I am presenting our Chapter 1 pre-proposal focusing on the SMCP knowledge and awareness of third-year BSMT students at UCLM for Academic Year 2026-2027.
   </div>
@@ -322,7 +338,7 @@
 <!-- ══════════════════════════════════════════════════════════════ -->
 <div class="slide" id="slide2">
   <div class="slide-header">
-    <span class="slide-number">SLIDE 02</span>
+    <span class="slide-number">02</span>
     <h2>Introduction: Communication in Global Maritime Operations</h2>
   </div>
   <div class="slide-body">
@@ -345,7 +361,7 @@
 <!-- ══════════════════════════════════════════════════════════════ -->
 <div class="slide" id="slide3">
   <div class="slide-header">
-    <span class="slide-number">SLIDE 03</span>
+    <span class="slide-number">03</span>
     <h2>Regulatory Foundations &amp; The Role of IMO SMCP</h2>
   </div>
   <div class="slide-body">
@@ -368,7 +384,7 @@
 <!-- ══════════════════════════════════════════════════════════════ -->
 <div class="slide" id="slide4">
   <div class="slide-header">
-    <span class="slide-number">SLIDE 04</span>
+    <span class="slide-number">04</span>
     <h2>Theoretical Framework &amp; Communicative Competence</h2>
   </div>
   <div class="slide-body">
@@ -392,11 +408,11 @@
 <!-- ══════════════════════════════════════════════════════════════ -->
 <div class="slide" id="slide5">
   <div class="slide-header">
-    <span class="slide-number">SLIDE 05</span>
+    <span class="slide-number">05</span>
     <h2>Statement of the Problem: Knowledge Domains</h2>
   </div>
   <div class="slide-body">
-    <p style="font-size:17px;color:var(--gray);margin-bottom:16px;line-height:1.4;">
+    <p style="font-size:15px;color:var(--gray);margin-bottom:12px;line-height:1.4;">
       <strong style="color:var(--white);">Research Question 1:</strong> What is the level of <em>knowledge</em> of third-year BSMT students regarding SMCP?
     </p>
     <ul class="points">
@@ -418,11 +434,11 @@
 <!-- ══════════════════════════════════════════════════════════════ -->
 <div class="slide" id="slide6">
   <div class="slide-header">
-    <span class="slide-number">SLIDE 06</span>
+    <span class="slide-number">06</span>
     <h2>Statement of the Problem: Awareness Constructs</h2>
   </div>
   <div class="slide-body">
-    <p style="font-size:17px;color:var(--gray);margin-bottom:16px;line-height:1.4;">
+    <p style="font-size:15px;color:var(--gray);margin-bottom:12px;line-height:1.4;">
       <strong style="color:var(--white);">Research Question 2:</strong> What is the level of <em>awareness</em> of third-year BSMT students regarding SMCP?
     </p>
     <ul class="points">
@@ -443,22 +459,22 @@
 <!-- ══════════════════════════════════════════════════════════════ -->
 <div class="slide" id="slide7">
   <div class="slide-header">
-    <span class="slide-number">SLIDE 07</span>
+    <span class="slide-number">07</span>
     <h2>Scope, Delimitations, and Definition of Terms</h2>
   </div>
   <div class="slide-body">
     <div class="clean-grid-2">
       <div class="clean-col">
         <h4>Scope &amp; Delimitations</h4>
-        <ul class="points">
-          <li><strong>Population:</strong> Enrolls 3rd-year BSMT students at UCLM for AY 2026–2027; excludes BSMarE.</li>
+        <ul class="points" style="gap:8px;">
+          <li><strong>Population:</strong> Enrolled 3rd-year BSMT students at UCLM for AY 2026–2027.</li>
           <li><strong>Methodology:</strong> Assesses cognitive understanding via written test instruments.</li>
           <li><strong>Exclusion:</strong> Excludes live acoustic transmission or simulator voice evaluation.</li>
         </ul>
       </div>
       <div class="clean-col">
         <h4>Operational Terms</h4>
-        <ul class="points">
+        <ul class="points" style="gap:8px;">
           <li><strong>Knowledge:</strong> Objective score on test domains.</li>
           <li><strong>Awareness:</strong> 4-point Likert scale self-reporting.</li>
           <li><strong>SMCP:</strong> Standard safety language under IMO Resolution A.918(22).</li>
@@ -469,7 +485,7 @@
   <div class="transition-line">Finally, we review the practical significance and stakeholder benefits of these findings.</div>
   <button class="notes-toggle" onclick="toggleNotes(this)">Show Speaker Notes</button>
   <div class="speaker-notes hidden">
-    <strong>Speaker Notes:</strong> Our scope focuses exclusively on third-year BSMT cadets at UCLM via written instruments, setting aside live acoustic simulator tests. Key terms are operationally defined.
+    <strong>Speaker Notes:</strong> Our scope focuses exclusively on third-year BSMT cadets at UCLM via written instruments, setting aside live simulator tests. Key terms are operationally defined.
   </div>
 </div>
 
@@ -478,7 +494,7 @@
 <!-- ══════════════════════════════════════════════════════════════ -->
 <div class="slide" id="slide8">
   <div class="slide-header">
-    <span class="slide-number">SLIDE 08</span>
+    <span class="slide-number">08</span>
     <h2>Significance of the Study &amp; Practical Implications</h2>
   </div>
   <div class="slide-body">
@@ -507,11 +523,22 @@
 </div><!-- /deck -->
 
 <script>
+  // Detect device type on load
+  window.addEventListener('DOMContentLoaded', () => {
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+    console.log("Device detected:", isMobile ? "Mobile / Tablet" : "Desktop Web");
+    if (isMobile) {
+      // Adjust top bar button text for tight mobile screens
+      const fsBtn = document.getElementById('fsBtn');
+      if(fsBtn) fsBtn.textContent = '⛶ FS';
+    }
+  });
+
   function toggleNotes(btn) {
     const notes = btn.nextElementSibling;
     if(notes.classList.contains('hidden')) {
       notes.classList.remove('hidden');
-      btn.textContent = 'Hide Speaker Notes';
+      btn.textContent = 'Hide Notes';
     } else {
       notes.classList.add('hidden');
       btn.textContent = 'Show Speaker Notes';
@@ -533,20 +560,21 @@
     const fsBtn = document.getElementById('fsBtn');
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen().then(() => {
-        fsBtn.textContent = '☒ Exit Fullscreen';
+        fsBtn.textContent = 'Exit FS';
       }).catch(err => {
-        alert(`Error attempting to enable fullscreen mode: ${err.message}`);
+        console.log(`Fullscreen error: ${err.message}`);
       });
     } else {
       if (document.exitFullscreen) {
         document.exitFullscreen().then(() => {
-          fsBtn.textContent = '⛶ Fullscreen';
+          const isMobile = window.innerWidth < 768;
+          fsBtn.textContent = isMobile ? '⛶ FS' : '⛶ Full';
         });
       }
     }
   }
 
-  // Keyboard navigation: Arrow Up/Down or PageUp/PageDown, and 'F' key for Fullscreen
+  // Keyboard navigation
   window.addEventListener('keydown', (e) => {
     if (e.key === 'f' || e.key === 'F') {
       if (document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
@@ -567,10 +595,11 @@
 
   document.addEventListener('fullscreenchange', () => {
     const fsBtn = document.getElementById('fsBtn');
+    const isMobile = window.innerWidth < 768;
     if (!document.fullscreenElement) {
-      fsBtn.textContent = '⛶ Fullscreen';
+      fsBtn.textContent = isMobile ? '⛶ FS' : '⛶ Full';
     } else {
-      fsBtn.textContent = '☒ Exit Fullscreen';
+      fsBtn.textContent = 'Exit FS';
     }
   });
 
