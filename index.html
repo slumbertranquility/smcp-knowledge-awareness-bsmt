@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SMCP Knowledge and Awareness — Research Presentation</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap');
 
   :root {
     --navy: #0a1628;
@@ -17,262 +17,253 @@
     --teal: #2ec4b6;
     --teal-dim: rgba(46,196,182,0.12);
     --white: #f4f4f6;
-    --gray: #a0a8b8;
-    --danger: #e74c3c;
-    --slide-w: 1280px;
-    --slide-h: 720px;
+    --gray: #b0b8c8;
   }
 
   *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 
-  html { scroll-behavior: smooth; }
-
-  body {
+  html, body {
     background: #060d1a;
     font-family: 'Inter', sans-serif;
     color: var(--white);
-    overflow-x: hidden;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
   }
 
   /* ── NAVIGATION BAR ── */
   .topbar {
-    position: fixed; top:0; left:0; width:100%; z-index: 1000;
-    background: rgba(10,22,40,0.92);
+    position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+    background: rgba(10,22,40,0.95);
     backdrop-filter: blur(14px);
     border-bottom: 1px solid rgba(201,168,76,0.18);
     display: flex; align-items: center; justify-content: space-between;
-    padding: 10px 36px; height: 56px;
+    padding: 10px 24px; height: 60px;
+    box-sizing: border-box;
   }
   .topbar-brand {
     font-family: 'Playfair Display', serif;
     font-size: 15px; color: var(--gold); letter-spacing: 1px;
+    flex-shrink: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 12px;
   }
-  .topbar-nav { display:flex; gap:6px; align-items:center; }
+  .topbar-right {
+    display: flex; align-items: center; gap: 12px;
+    flex-shrink: 0;
+  }
+  .topbar-nav { 
+    display: flex; gap: 4px; align-items: center; 
+    flex-shrink: 0;
+  }
   .topbar-nav button {
-    background: none; border:1px solid rgba(201,168,76,0.25);
-    color: var(--gold-light); border-radius:6px; padding:5px 14px;
-    font-family:'Inter',sans-serif; font-size:12px; cursor:pointer;
+    background: none; border: 1px solid rgba(201,168,76,0.25);
+    color: var(--gold-light); border-radius: 6px; padding: 4px 10px;
+    font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; cursor: pointer;
     transition: all .2s;
   }
   .topbar-nav button:hover, .topbar-nav button.active {
     background: var(--gold); color: var(--navy); border-color: var(--gold);
   }
+  .fullscreen-btn {
+    background: var(--gold-dim) !important;
+    border-color: var(--gold) !important;
+    color: var(--gold) !important;
+    flex-shrink: 0;
+  }
+  .fullscreen-btn:hover {
+    background: var(--gold) !important;
+    color: var(--navy) !important;
+  }
   .slide-counter {
-    font-family:'JetBrains Mono',monospace;
-    font-size:12px; color:var(--gray); margin-left:12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; color: var(--gray);
+    flex-shrink: 0;
+    white-space: nowrap;
   }
 
-  /* ── SLIDE CONTAINER ── */
+  /* ── PRESENTATION DECK (Full Screen Snap Container) ── */
   .deck {
-    padding-top: 76px; padding-bottom: 40px;
-    display: flex; flex-direction: column; align-items: center; gap: 48px;
+    width: 100vw;
+    height: 100vh;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
   }
 
   .slide {
-    width: var(--slide-w); min-height: var(--slide-h);
+    width: 100vw;
+    height: 100vh;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
     background: var(--navy);
-    border-radius: 12px;
-    border: 1px solid rgba(201,168,76,0.10);
-    box-shadow: 0 8px 60px rgba(0,0,0,0.55);
-    overflow: hidden;
     position: relative;
-    display: flex; flex-direction: column;
-    scroll-margin-top: 72px;
+    display: flex; 
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    padding-top: 60px;
   }
 
-  /* watermark compass */
+  /* Watermark compass */
   .slide::after {
     content: '';
     position: absolute;
-    width: 420px; height: 420px;
-    right: -90px; bottom: -90px;
+    width: 500px; height: 500px;
+    right: -80px; bottom: -80px;
     background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' fill='none'%3E%3Ccircle cx='100' cy='100' r='95' stroke='%23c9a84c' stroke-width='.4' opacity='.08'/%3E%3Ccircle cx='100' cy='100' r='70' stroke='%23c9a84c' stroke-width='.3' opacity='.06'/%3E%3Cline x1='100' y1='5' x2='100' y2='195' stroke='%23c9a84c' stroke-width='.3' opacity='.06'/%3E%3Cline x1='5' y1='100' x2='195' y2='100' stroke='%23c9a84c' stroke-width='.3' opacity='.06'/%3E%3Cpolygon points='100,10 106,90 100,70 94,90' fill='%23c9a84c' opacity='.07'/%3E%3Cpolygon points='100,190 94,110 100,130 106,110' fill='%23c9a84c' opacity='.05'/%3E%3C/svg%3E") no-repeat center/contain;
-    pointer-events:none;
-    z-index:0;
+    pointer-events: none;
+    z-index: 0;
   }
 
-  .slide > * { position: relative; z-index:1; }
+  .slide > * { position: relative; z-index: 1; }
 
   /* ── SLIDE HEADER BAR ── */
   .slide-header {
-    padding: 28px 52px 22px;
+    padding: 20px 56px 12px;
     border-bottom: 1px solid rgba(201,168,76,0.12);
-    display: flex; align-items: center; gap: 18px;
+    display: flex; align-items: center; gap: 20px;
+    flex-shrink: 0;
   }
   .slide-number {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px; color: var(--gold);
+    font-size: 12px; color: var(--gold);
     background: var(--gold-dim);
     padding: 4px 12px; border-radius: 20px;
     letter-spacing: 1.5px;
-    flex-shrink:0;
+    flex-shrink: 0;
   }
   .slide-header h2 {
     font-family: 'Playfair Display', serif;
-    font-size: 26px; font-weight:700;
+    font-size: 26px; font-weight: 700;
     color: var(--white);
-    line-height:1.25;
+    line-height: 1.2;
   }
 
   /* ── SLIDE BODY ── */
   .slide-body {
-    flex:1; padding: 32px 52px 36px;
-    display: flex; gap: 40px;
+    flex: 1; 
+    padding: 24px 56px;
+    display: flex; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+    overflow: hidden;
   }
-  .slide-body.col-1 { flex-direction: column; }
-  .slide-body.col-2 > .col { flex:1; }
-  .slide-body.col-2 > .col + .col { border-left: 1px solid rgba(201,168,76,0.08); padding-left:36px; }
 
   /* ── BULLET LIST ── */
-  .points { list-style: none; display:flex; flex-direction:column; gap:18px; }
+  .points { list-style: none; display: flex; flex-direction: column; gap: 16px; width: 100%; }
   .points li {
     padding-left: 28px; position: relative;
-    font-size: 15.5px; line-height:1.65;
-    color: rgba(244,244,246,0.88);
+    font-size: 18px; line-height: 1.5;
+    color: rgba(244,244,246,0.92);
   }
   .points li::before {
-    content:''; position:absolute; left:0; top:9px;
-    width:10px; height:10px; border-radius:50%;
-    border:2px solid var(--gold);
+    content: ''; position: absolute; left: 0; top: 9px;
+    width: 10px; height: 10px; border-radius: 50%;
+    border: 2px solid var(--gold);
     background: transparent;
   }
-  .points li strong { color:var(--gold-light); font-weight:600; }
-
-  /* sub-points */
-  .sub-points { list-style:none; margin-top:10px; display:flex; flex-direction:column; gap:10px; }
-  .sub-points li { padding-left:22px; font-size:14px; }
-  .sub-points li::before {
-    width:7px; height:7px; top:7px;
-    border-color: var(--teal); border-width:1.5px;
-  }
-
-  /* ── VISUAL CARD ── */
-  .visual-card {
-    background: var(--navy-light);
-    border: 1px solid rgba(201,168,76,0.10);
-    border-radius: 10px;
-    padding: 28px; text-align:center;
-    display:flex; flex-direction:column;
-    align-items:center; justify-content:center;
-    min-height: 200px;
-  }
-  .visual-card svg { max-width:100%; margin-bottom:14px; }
-  .visual-card .caption {
-    font-size:12px; color:var(--gray);
-    font-style:italic; margin-top:8px;
-  }
+  .points li strong { color: var(--gold-light); font-weight: 600; }
 
   /* ── BADGE / TAG ── */
   .tag {
-    display:inline-block; font-size:11px;
-    padding:3px 12px; border-radius:20px;
-    font-weight:600; letter-spacing:.5px;
-    margin-right:6px; margin-bottom:4px;
+    display: inline-block; font-size: 12px;
+    padding: 3px 12px; border-radius: 20px;
+    font-weight: 600; letter-spacing: .5px;
+    margin-right: 6px; margin-bottom: 4px;
   }
-  .tag.gold { background:var(--gold-dim); color:var(--gold); }
-  .tag.teal { background:var(--teal-dim); color:var(--teal); }
-  .tag.red  { background:rgba(231,76,60,0.12); color:var(--danger); }
+  .tag.gold { background: var(--gold-dim); color: var(--gold); }
+  .tag.teal { background: var(--teal-dim); color: var(--teal); }
 
   /* ── TITLE SLIDE SPECIAL ── */
   .slide.title-slide {
     background: linear-gradient(160deg, var(--navy) 0%, #0e1e38 50%, #122240 100%);
-    justify-content: center; align-items: center; text-align:center;
-    padding: 60px 80px;
+    justify-content: center; align-items: center; text-align: center;
+    padding: 40px 80px;
   }
-  .slide.title-slide .slide-header { display:none; }
-  .slide.title-slide::after { right:-60px; bottom:-60px; width:520px; height:520px; opacity:.6; }
+  .slide.title-slide .slide-header { display: none; }
+  .slide.title-slide::after { right: -60px; bottom: -60px; width: 600px; height: 600px; opacity: .6; }
   .title-slide .title-top-line {
-    font-size:12px; letter-spacing:4px; text-transform:uppercase;
-    color:var(--gold); margin-bottom:20px; font-weight:600;
+    font-size: 13px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 16px; font-weight: 600;
   }
   .title-slide h1 {
-    font-family:'Playfair Display',serif; font-size:42px; font-weight:900;
-    line-height:1.22; color:var(--white); max-width:900px;
+    font-family: 'Playfair Display', serif; font-size: 42px; font-weight: 900;
+    line-height: 1.2; color: var(--white); max-width: 1000px;
   }
-  .title-slide h1 span.highlight { color:var(--gold); }
+  .title-slide h1 span.highlight { color: var(--gold); }
   .title-slide .subtitle {
-    margin-top:22px; font-size:16px; color:var(--gray);
-    line-height:1.6; max-width:760px;
+    margin-top: 18px; font-size: 18px; color: var(--gray);
+    line-height: 1.5; max-width: 850px;
   }
   .title-slide .meta-row {
-    margin-top:36px; display:flex; gap:24px; justify-content:center; flex-wrap:wrap;
+    margin-top: 28px; display: flex; gap: 24px; justify-content: center; flex-wrap: wrap;
   }
   .title-slide .meta-item {
-    font-size:12.5px; color:rgba(244,244,246,0.7);
-    display:flex; align-items:center; gap:7px;
+    font-size: 14px; color: rgba(244,244,246,0.8);
+    display: flex; align-items: center; gap: 7px;
   }
-  .title-slide .meta-item .dot { width:5px; height:5px; border-radius:50%; background:var(--gold); }
+  .title-slide .meta-item .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); }
 
-  /* ── IPO FRAMEWORK ── */
-  .ipo-grid { display:grid; grid-template-columns:1fr auto 1fr auto 1fr; gap:0; align-items:stretch; width:100%; }
-  .ipo-box {
-    background:var(--navy-light); border:1px solid rgba(201,168,76,0.12);
-    border-radius:10px; padding:24px 20px;
+  /* ── CLEAN STACKED GRID FOR MULTI-COLUMN SECTIONS (NO CARDS) ── */
+  .clean-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 32px;
+    width: 100%;
   }
-  .ipo-box h4 { font-size:13px; text-transform:uppercase; letter-spacing:2px; color:var(--gold); margin-bottom:14px; text-align:center; }
-  .ipo-box ul { list-style:none; }
-  .ipo-box ul li { font-size:13.5px; line-height:1.55; padding:5px 0; color:rgba(244,244,246,0.82); padding-left:16px; position:relative; }
-  .ipo-box ul li::before { content:'▸'; position:absolute; left:0; color:var(--gold); }
-  .ipo-arrow { display:flex; align-items:center; justify-content:center; padding:0 8px; }
-  .ipo-arrow svg { width:36px; height:36px; }
-
-  /* ── STAKEHOLDER GRID ── */
-  .stake-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; width:100%; }
-  .stake-card {
-    background:var(--navy-light); border:1px solid rgba(201,168,76,0.10);
-    border-radius:10px; padding:22px 24px;
+  .clean-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    width: 100%;
   }
-  .stake-card h4 { font-size:14px; color:var(--gold-light); margin-bottom:8px; font-weight:600; }
-  .stake-card p { font-size:13.5px; color:rgba(244,244,246,0.78); line-height:1.6; }
-
-  /* ── THREE PILLARS ── */
-  .pillars { display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; width:100%; }
-  .pillar {
-    background:var(--navy-light); border:1px solid rgba(201,168,76,0.10);
-    border-radius:10px; padding:28px 22px; text-align:center;
+  .clean-col h4 {
+    font-size: 18px;
+    color: var(--gold);
+    margin-bottom: 12px;
+    font-weight: 700;
   }
-  .pillar .pillar-icon { margin-bottom:16px; }
-  .pillar h4 { font-size:14px; color:var(--gold); margin-bottom:10px; font-weight:700; }
-  .pillar p { font-size:13px; color:rgba(244,244,246,0.75); line-height:1.6; }
+  .clean-col p {
+    font-size: 16px;
+    color: rgba(244,244,246,0.85);
+    line-height: 1.6;
+  }
 
   /* ── SPEAKER NOTES ── */
   .speaker-notes {
-    background: rgba(201,168,76,0.04);
-    border-top: 1px solid rgba(201,168,76,0.10);
-    padding: 16px 52px;
-    font-size:12.5px; color:var(--gray); line-height:1.6;
+    background: rgba(201,168,76,0.05);
+    border-top: 1px solid rgba(201,168,76,0.12);
+    padding: 10px 56px;
+    font-size: 13px; color: var(--gray); line-height: 1.5;
+    flex-shrink: 0;
   }
-  .speaker-notes strong { color:var(--gold-light); font-size:11px; letter-spacing:1px; text-transform:uppercase; }
+  .speaker-notes strong { color: var(--gold-light); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
   .notes-toggle {
-    background:none; border:1px solid rgba(201,168,76,0.2); color:var(--gold-light);
-    padding:4px 14px; border-radius:5px; font-size:11px; cursor:pointer;
-    margin-left:52px; margin-bottom:8px; margin-top:4px; transition:all .2s;
+    background: none; border: 1px solid rgba(201,168,76,0.25); color: var(--gold-light);
+    padding: 4px 12px; border-radius: 5px; font-size: 11px; font-weight: 600; cursor: pointer;
+    margin-left: 56px; margin-bottom: 4px; margin-top: 2px; transition: all .2s;
+    flex-shrink: 0;
   }
-  .notes-toggle:hover { background:var(--gold); color:var(--navy); }
-  .speaker-notes.hidden { display:none; }
+  .notes-toggle:hover { background: var(--gold); color: var(--navy); }
+  .speaker-notes.hidden { display: none; }
 
   /* ── TRANSITION LINE ── */
   .transition-line {
-    padding: 8px 52px 18px;
-    font-size:12px; color:var(--teal);
-    font-style:italic;
-    border-top:1px dashed rgba(46,196,182,0.15);
-    margin-top:auto;
+    padding: 6px 56px 10px;
+    font-size: 13px; color: var(--teal);
+    font-style: italic;
+    border-top: 1px dashed rgba(46,196,182,0.2);
+    margin-top: auto;
+    flex-shrink: 0;
   }
-  .transition-line::before { content:'→ '; }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width:1340px) {
-    .slide { width:96vw; min-height:auto; }
-  }
-  @media (max-width:860px) {
-    .slide-body.col-2 { flex-direction:column; }
-    .slide-body.col-2 > .col + .col { border-left:none; padding-left:0; border-top:1px solid rgba(201,168,76,0.08); padding-top:24px; }
-    .ipo-grid { grid-template-columns:1fr; gap:14px; }
-    .ipo-arrow { transform:rotate(90deg); padding:4px 0; }
-    .pillars, .stake-grid { grid-template-columns:1fr; }
-    .title-slide h1 { font-size:28px; }
-  }
+  .transition-line::before { content: '→ '; }
 </style>
 </head>
 <body>
@@ -280,56 +271,49 @@
 <!-- ═══════════ TOP BAR ═══════════ -->
 <div class="topbar">
   <div class="topbar-brand">⚓ SMCP Research Presentation</div>
-  <div class="topbar-nav">
-    <button onclick="scrollToSlide(1)" class="active">1</button>
-    <button onclick="scrollToSlide(2)">2</button>
-    <button onclick="scrollToSlide(3)">3</button>
-    <button onclick="scrollToSlide(4)">4</button>
-    <button onclick="scrollToSlide(5)">5</button>
-    <button onclick="scrollToSlide(6)">6</button>
-    <button onclick="scrollToSlide(7)">7</button>
-    <button onclick="scrollToSlide(8)">8</button>
+  <div class="topbar-right">
+    <div class="topbar-nav">
+      <button onclick="scrollToSlide(1)" class="active" id="btn1">1</button>
+      <button onclick="scrollToSlide(2)" id="btn2">2</button>
+      <button onclick="scrollToSlide(3)" id="btn3">3</button>
+      <button onclick="scrollToSlide(4)" id="btn4">4</button>
+      <button onclick="scrollToSlide(5)" id="btn5">5</button>
+      <button onclick="scrollToSlide(6)" id="btn6">6</button>
+      <button onclick="scrollToSlide(7)" id="btn7">7</button>
+      <button onclick="scrollToSlide(8)" id="btn8">8</button>
+    </div>
+    <button onclick="toggleFullscreen()" class="fullscreen-btn" id="fsBtn">⛶ Fullscreen</button>
     <span class="slide-counter">Slide <span id="currentSlide">1</span> / 8</span>
   </div>
 </div>
 
-<div class="deck">
+<div class="deck" id="deckContainer">
 
 <!-- ══════════════════════════════════════════════════════════════ -->
 <!-- SLIDE 1 — TITLE -->
 <!-- ══════════════════════════════════════════════════════════════ -->
 <div class="slide title-slide" id="slide1">
-  <!-- Decorative compass SVG -->
-  <svg width="90" height="90" viewBox="0 0 200 200" fill="none" style="margin-bottom:12px;opacity:.45">
+  <svg width="80" height="80" viewBox="0 0 200 200" fill="none" style="margin-bottom:10px;opacity:.5">
     <circle cx="100" cy="100" r="92" stroke="#c9a84c" stroke-width="1.2"/>
     <circle cx="100" cy="100" r="78" stroke="#c9a84c" stroke-width=".6" opacity=".5"/>
     <circle cx="100" cy="100" r="4" fill="#c9a84c"/>
     <line x1="100" y1="12" x2="100" y2="188" stroke="#c9a84c" stroke-width=".6" opacity=".4"/>
     <line x1="12" y1="100" x2="188" y2="100" stroke="#c9a84c" stroke-width=".6" opacity=".4"/>
-    <line x1="37" y1="37" x2="163" y2="163" stroke="#c9a84c" stroke-width=".4" opacity=".25"/>
-    <line x1="163" y1="37" x2="37" y2="163" stroke="#c9a84c" stroke-width=".4" opacity=".25"/>
     <polygon points="100,14 107,80 100,68 93,80" fill="#c9a84c" opacity=".7"/>
-    <polygon points="100,186 93,120 100,132 107,120" fill="#c9a84c" opacity=".35"/>
-    <polygon points="14,100 80,93 68,100 80,107" fill="#c9a84c" opacity=".35"/>
-    <polygon points="186,100 120,107 132,100 120,93" fill="#c9a84c" opacity=".35"/>
-    <text x="100" y="9" text-anchor="middle" fill="#c9a84c" font-size="9" font-family="Inter" font-weight="700">N</text>
-    <text x="100" y="198" text-anchor="middle" fill="#c9a84c" font-size="9" font-family="Inter" font-weight="600" opacity=".5">S</text>
-    <text x="194" y="103" text-anchor="middle" fill="#c9a84c" font-size="9" font-family="Inter" font-weight="600" opacity=".5">E</text>
-    <text x="7" y="103" text-anchor="middle" fill="#c9a84c" font-size="9" font-family="Inter" font-weight="600" opacity=".5">W</text>
   </svg>
 
   <div class="title-top-line">Chapter 1 &nbsp;·&nbsp; Pre-Proposal Defense</div>
   <h1><span class="highlight">SMCP Knowledge &amp; Awareness</span><br>Among 3rd-Year BSMT Students at UCLM</h1>
   <p class="subtitle">Assessing the level of knowledge and awareness of IMO Standard Marine Communication Phrases among third-year Bachelor of Science in Marine Transportation students at the University of Cebu Lapu-Lapu and Mandaue</p>
   <div class="meta-row">
-    <span class="meta-item"><span class="dot"></span>University of Cebu Lapu-Lapu &amp; Mandaue — College of Maritime Education</span>
+    <span class="meta-item"><span class="dot"></span>UCLM College of Maritime Education</span>
     <span class="meta-item"><span class="dot"></span>BSMT Section Mike (2M)</span>
     <span class="meta-item"><span class="dot"></span>Academic Year 2026 – 2027</span>
   </div>
 
-  <button class="notes-toggle" onclick="toggleNotes(this)" style="margin-top:32px;">Show Speaker Notes</button>
+  <button class="notes-toggle" onclick="toggleNotes(this)" style="margin-top:20px;">Show Speaker Notes</button>
   <div class="speaker-notes hidden">
-    <strong>Speaker Notes:</strong> Good day, panel members and instructors. Today, I am presenting our Chapter 1 pre-proposal focusing on the SMCP knowledge and awareness of third-year BSMT students at UCLM for Academic Year 2026-2027.
+    <strong>Speaker Notes:</strong> Good day panel members and instructors. Today, I am presenting our Chapter 1 pre-proposal focusing on the SMCP knowledge and awareness of third-year BSMT students at UCLM for Academic Year 2026-2027.
   </div>
 </div>
 
@@ -341,58 +325,18 @@
     <span class="slide-number">SLIDE 02</span>
     <h2>Introduction: Communication in Global Maritime Operations</h2>
   </div>
-  <div class="slide-body col-2">
-    <div class="col">
-      <ul class="points">
-        <li>Seafarers from <strong>diverse cultural and linguistic backgrounds</strong> work side by side on international vessels, creating complex communication environments.</li>
-        <li>Language misunderstandings <strong>directly link to unsafe operational situations</strong> in mixed-nationality crews <span class="tag gold">Nævestad et al., 2023</span></li>
-        <li>Maritime English coordinates <strong>routine exchanges, safety, distress, and urgency</strong> communications — with persistent challenges in word choice, accent, and sentence construction <span class="tag teal">Sartini et al., 2025</span></li>
-        <li><strong>Standardized phraseology</strong> is required to eliminate ambiguity during safety-critical exchanges at sea.</li>
-      </ul>
-    </div>
-    <div class="col">
-      <div class="visual-card">
-        <!-- Container ship illustration -->
-        <svg width="280" height="160" viewBox="0 0 280 160" fill="none">
-          <!-- Water -->
-          <path d="M0 130 Q35 120 70 130 T140 130 T210 130 T280 130 V160 H0Z" fill="#0e2a4a"/>
-          <path d="M0 138 Q35 132 70 138 T140 138 T210 138 T280 138 V160 H0Z" fill="#0a1e36"/>
-          <!-- Hull -->
-          <path d="M40 120 L55 95 H225 L240 120 Z" fill="#1a3a5c" stroke="#c9a84c" stroke-width=".6"/>
-          <!-- Deck -->
-          <rect x="70" y="78" width="140" height="17" rx="2" fill="#162544" stroke="#c9a84c" stroke-width=".4"/>
-          <!-- Bridge -->
-          <rect x="170" y="52" width="32" height="26" rx="2" fill="#1e3550" stroke="#c9a84c" stroke-width=".5"/>
-          <rect x="175" y="57" width="8" height="8" rx="1" fill="rgba(46,196,182,0.3)"/>
-          <rect x="187" y="57" width="8" height="8" rx="1" fill="rgba(46,196,182,0.3)"/>
-          <!-- Mast -->
-          <line x1="186" y1="52" x2="186" y2="32" stroke="#c9a84c" stroke-width=".8"/>
-          <circle cx="186" cy="30" r="2.5" fill="#c9a84c" opacity=".6"/>
-          <!-- Containers -->
-          <rect x="78" y="68" width="14" height="10" rx="1" fill="#c9a84c" opacity=".25"/>
-          <rect x="95" y="68" width="14" height="10" rx="1" fill="#2ec4b6" opacity=".2"/>
-          <rect x="112" y="68" width="14" height="10" rx="1" fill="#c9a84c" opacity=".18"/>
-          <rect x="129" y="68" width="14" height="10" rx="1" fill="#2ec4b6" opacity=".25"/>
-          <rect x="146" y="68" width="14" height="10" rx="1" fill="#c9a84c" opacity=".2"/>
-          <rect x="85" y="57" width="14" height="10" rx="1" fill="#2ec4b6" opacity=".15"/>
-          <rect x="102" y="57" width="14" height="10" rx="1" fill="#c9a84c" opacity=".22"/>
-          <rect x="119" y="57" width="14" height="10" rx="1" fill="#2ec4b6" opacity=".18"/>
-          <rect x="136" y="57" width="14" height="10" rx="1" fill="#c9a84c" opacity=".15"/>
-          <!-- Radio waves -->
-          <path d="M200 38 Q210 30 220 38" stroke="#c9a84c" stroke-width=".6" fill="none" opacity=".4"/>
-          <path d="M196 34 Q210 22 224 34" stroke="#c9a84c" stroke-width=".5" fill="none" opacity=".25"/>
-          <path d="M192 30 Q210 14 228 30" stroke="#c9a84c" stroke-width=".4" fill="none" opacity=".15"/>
-          <!-- Flag indicators -->
-          <text x="140" y="150" text-anchor="middle" fill="#c9a84c" font-size="9" font-family="Inter" opacity=".5">Multinational Vessel Operations</text>
-        </svg>
-        <p class="caption">Communication failures on the bridge can lead to collisions, groundings, and loss of life.</p>
-      </div>
-    </div>
+  <div class="slide-body">
+    <ul class="points">
+      <li>Seafarers from <strong>diverse cultural and linguistic backgrounds</strong> work side by side on international vessels.</li>
+      <li>Language misunderstandings <strong>directly link to unsafe operational situations</strong> in mixed-nationality crews <span class="tag gold">Nævestad et al., 2023</span>.</li>
+      <li>Maritime English coordinates <strong>routine exchanges, safety, distress, and urgency</strong> situations <span class="tag teal">Sartini et al., 2025</span>.</li>
+      <li><strong>Standardized phraseology</strong> is required to eliminate ambiguity during safety-critical exchanges at sea.</li>
+    </ul>
   </div>
   <div class="transition-line">This operational reality is governed by strict international and local regulatory frameworks.</div>
   <button class="notes-toggle" onclick="toggleNotes(this)">Show Speaker Notes</button>
   <div class="speaker-notes hidden">
-    <strong>Speaker Notes:</strong> Maritime operations unfold in an international environment where language barriers create severe safety risks. Nævestad et al. (2023) found that mixed-nationality crews reported more unsafe situations directly linked to language misunderstandings. Standardized communication is vital to prevent bridge miscommunication.
+    <strong>Speaker Notes:</strong> Maritime operations unfold in an international environment where language barriers create severe safety risks. Standardized communication is vital to prevent bridge miscommunication.
   </div>
 </div>
 
@@ -404,59 +348,18 @@
     <span class="slide-number">SLIDE 03</span>
     <h2>Regulatory Foundations &amp; The Role of IMO SMCP</h2>
   </div>
-  <div class="slide-body col-2">
-    <div class="col">
-      <ul class="points">
-        <li>Adopted via <strong>IMO Resolution A.918(22)</strong> in 2001 to enhance navigational safety and standardize ship communications.</li>
-        <li>Structured phraseology specifically engineered to <strong>prevent ambiguity</strong> in multilingual environments.</li>
-        <li>Linked directly to <strong>STCW competencies</strong> required for officers in charge of a navigational watch.</li>
-        <li>Codified locally under <strong>Joint CHED-MARINA Memorandum Circular No.&nbsp;01, Series of 2023</strong> — aligning BSMT curriculum with operational-level competence under Section A-II/1 of the STCW Code.</li>
-      </ul>
-    </div>
-    <div class="col">
-      <div class="visual-card">
-        <!-- Compliance flow diagram -->
-        <svg width="260" height="260" viewBox="0 0 260 260" fill="none">
-          <!-- IMO Box -->
-          <rect x="75" y="10" width="110" height="48" rx="8" fill="var(--navy-light)" stroke="#c9a84c" stroke-width="1"/>
-          <text x="130" y="30" text-anchor="middle" fill="#c9a84c" font-size="11" font-family="Inter" font-weight="700">IMO</text>
-          <text x="130" y="46" text-anchor="middle" fill="var(--white)" font-size="9" font-family="Inter" opacity=".8">Resolution A.918(22)</text>
-          <!-- Arrow 1 -->
-          <line x1="130" y1="58" x2="130" y2="82" stroke="#c9a84c" stroke-width="1"/>
-          <polygon points="125,80 135,80 130,90" fill="#c9a84c"/>
-          <!-- SMCP Box -->
-          <rect x="55" y="92" width="150" height="42" rx="8" fill="var(--gold-dim)" stroke="#c9a84c" stroke-width="1.2"/>
-          <text x="130" y="110" text-anchor="middle" fill="#c9a84c" font-size="12" font-family="Inter" font-weight="700">SMCP</text>
-          <text x="130" y="125" text-anchor="middle" fill="var(--white)" font-size="8.5" font-family="Inter" opacity=".7">Standard Marine Communication Phrases</text>
-          <!-- Arrow 2 split -->
-          <line x1="100" y1="134" x2="70" y2="160" stroke="#c9a84c" stroke-width=".8"/>
-          <line x1="160" y1="134" x2="190" y2="160" stroke="#c9a84c" stroke-width=".8"/>
-          <polygon points="65,157 75,157 70,165" fill="#c9a84c"/>
-          <polygon points="185,157 195,157 190,165" fill="#c9a84c"/>
-          <!-- STCW Box -->
-          <rect x="15" y="166" width="110" height="40" rx="8" fill="var(--navy-light)" stroke="#2ec4b6" stroke-width=".8"/>
-          <text x="70" y="184" text-anchor="middle" fill="#2ec4b6" font-size="10" font-family="Inter" font-weight="700">STCW Convention</text>
-          <text x="70" y="198" text-anchor="middle" fill="var(--white)" font-size="8" font-family="Inter" opacity=".7">Section A-II/1</text>
-          <!-- CHED-MARINA Box -->
-          <rect x="135" y="166" width="110" height="40" rx="8" fill="var(--navy-light)" stroke="#2ec4b6" stroke-width=".8"/>
-          <text x="190" y="184" text-anchor="middle" fill="#2ec4b6" font-size="10" font-family="Inter" font-weight="700">CHED-MARINA</text>
-          <text x="190" y="198" text-anchor="middle" fill="var(--white)" font-size="8" font-family="Inter" opacity=".7">MC No. 01, s. 2023</text>
-          <!-- Arrow 3 merge -->
-          <line x1="70" y1="206" x2="100" y2="228" stroke="#2ec4b6" stroke-width=".8"/>
-          <line x1="190" y1="206" x2="160" y2="228" stroke="#2ec4b6" stroke-width=".8"/>
-          <polygon points="125,233 135,233 130,241" fill="#2ec4b6"/>
-          <!-- BSMT Box -->
-          <rect x="75" y="230" width="110" height="26" rx="6" fill="rgba(46,196,182,0.1)" stroke="#2ec4b6" stroke-width="1"/>
-          <text x="130" y="247" text-anchor="middle" fill="#2ec4b6" font-size="10" font-family="Inter" font-weight="600">BSMT Curriculum</text>
-        </svg>
-        <p class="caption">Regulatory traceability: IMO → SMCP → STCW &amp; CHED-MARINA → BSMT</p>
-      </div>
-    </div>
+  <div class="slide-body">
+    <ul class="points">
+      <li>Adopted via <strong>IMO Resolution A.918(22)</strong> in 2001 to enhance navigational safety and standardize ship communications.</li>
+      <li>Structured phraseology specifically engineered to <strong>prevent ambiguity</strong> in multilingual environments.</li>
+      <li>Linked directly to <strong>STCW competencies</strong> required for officers in charge of a navigational watch.</li>
+      <li>Codified locally under <strong>Joint CHED-MARINA Memorandum Circular No. 01, Series of 2023</strong>.</li>
+    </ul>
   </div>
   <div class="transition-line">To measure this effectively, the study relies on established linguistic and educational theories.</div>
   <button class="notes-toggle" onclick="toggleNotes(this)">Show Speaker Notes</button>
   <div class="speaker-notes hidden">
-    <strong>Speaker Notes:</strong> The IMO established SMCP through Resolution A.918(22) to standardize safety language. This is formally integrated into STCW standards and enforced locally through Joint CHED-MARINA MC No. 01 Series of 2023, making it a mandated component of the BSMT program.
+    <strong>Speaker Notes:</strong> The IMO established SMCP through Resolution A.918(22). This is formally integrated into STCW standards and enforced locally through Joint CHED-MARINA MC No. 01 Series of 2023.
   </div>
 </div>
 
@@ -468,67 +371,19 @@
     <span class="slide-number">SLIDE 04</span>
     <h2>Theoretical Framework &amp; Communicative Competence</h2>
   </div>
-  <div class="slide-body col-2">
-    <div class="col">
-      <ul class="points">
-        <li>Anchored on <strong>Canale &amp; Swain's (1980) Communicative Competence Theory</strong> and <strong>Celce-Murcia's (2007)</strong> expanded model.</li>
-        <li>Integrates four interrelated competencies into maritime communication analysis:</li>
-      </ul>
-      <ul class="points" style="margin-top:14px;">
-        <li><span class="tag gold">Grammatical</span> Knowledge of lexical items, morphology, and syntax — reflected in SMCP phrase recognition and terminology.</li>
-        <li><span class="tag gold">Sociolinguistic</span> Understanding social context and purpose — reflected in awareness of SMCP's role in safety communication.</li>
-        <li><span class="tag teal">Discourse</span> Combining forms and meanings for coherent text — reflected in situational application of SMCP.</li>
-        <li><span class="tag teal">Strategic</span> Compensatory strategies for repair — reflected in recognizing SMCP's professional relevance.</li>
-      </ul>
-    </div>
-    <div class="col">
-      <div class="visual-card">
-        <!-- Four-quadrant concept map -->
-        <svg width="260" height="240" viewBox="0 0 260 240" fill="none">
-          <!-- Center circle -->
-          <circle cx="130" cy="120" r="32" fill="var(--gold-dim)" stroke="#c9a84c" stroke-width="1.2"/>
-          <text x="130" y="115" text-anchor="middle" fill="#c9a84c" font-size="9" font-family="Inter" font-weight="700">SMCP</text>
-          <text x="130" y="128" text-anchor="middle" fill="var(--white)" font-size="7.5" font-family="Inter" opacity=".8">Communicative</text>
-          <text x="130" y="138" text-anchor="middle" fill="var(--white)" font-size="7.5" font-family="Inter" opacity=".8">Competence</text>
-          <!-- Top-left: Grammatical -->
-          <rect x="10" y="10" width="95" height="55" rx="8" fill="var(--navy-light)" stroke="#c9a84c" stroke-width=".7"/>
-          <text x="57" y="32" text-anchor="middle" fill="#c9a84c" font-size="10" font-family="Inter" font-weight="700">Grammatical</text>
-          <text x="57" y="48" text-anchor="middle" fill="var(--white)" font-size="7.5" font-family="Inter" opacity=".7">Phrase recognition</text>
-          <text x="57" y="58" text-anchor="middle" fill="var(--white)" font-size="7.5" font-family="Inter" opacity=".7">&amp; terminology</text>
-          <line x1="105" y1="55" x2="105" y2="95" stroke="#c9a84c" stroke-width=".5" stroke-dasharray="3,3"/>
-          <!-- Top-right: Sociolinguistic -->
-          <rect x="155" y="10" width="95" height="55" rx="8" fill="var(--navy-light)" stroke="#c9a84c" stroke-width=".7"/>
-          <text x="202" y="32" text-anchor="middle" fill="#c9a84c" font-size="10" font-family="Inter" font-weight="700">Sociolinguistic</text>
-          <text x="202" y="48" text-anchor="middle" fill="var(--white)" font-size="7.5" font-family="Inter" opacity=".7">Role &amp; safety</text>
-          <text x="202" y="58" text-anchor="middle" fill="var(--white)" font-size="7.5" font-family="Inter" opacity=".7">awareness</text>
-          <line x1="155" y1="55" x2="155" y2="95" stroke="#c9a84c" stroke-width=".5" stroke-dasharray="3,3"/>
-          <!-- Bottom-left: Discourse -->
-          <rect x="10" y="175" width="95" height="55" rx="8" fill="var(--navy-light)" stroke="#2ec4b6" stroke-width=".7"/>
-          <text x="57" y="197" text-anchor="middle" fill="#2ec4b6" font-size="10" font-family="Inter" font-weight="700">Discourse</text>
-          <text x="57" y="213" text-anchor="middle" fill="var(--white)" font-size="7.5" font-family="Inter" opacity=".7">Situational</text>
-          <text x="57" y="223" text-anchor="middle" fill="var(--white)" font-size="7.5" font-family="Inter" opacity=".7">application</text>
-          <line x1="105" y1="145" x2="105" y2="175" stroke="#2ec4b6" stroke-width=".5" stroke-dasharray="3,3"/>
-          <!-- Bottom-right: Strategic -->
-          <rect x="155" y="175" width="95" height="55" rx="8" fill="var(--navy-light)" stroke="#2ec4b6" stroke-width=".7"/>
-          <text x="202" y="197" text-anchor="middle" fill="#2ec4b6" font-size="10" font-family="Inter" font-weight="700">Strategic</text>
-          <text x="202" y="213" text-anchor="middle" fill="var(--white)" font-size="7.5" font-family="Inter" opacity=".7">Professional</text>
-          <text x="202" y="223" text-anchor="middle" fill="var(--white)" font-size="7.5" font-family="Inter" opacity=".7">relevance</text>
-          <line x1="155" y1="145" x2="155" y2="175" stroke="#2ec4b6" stroke-width=".5" stroke-dasharray="3,3"/>
-          <!-- Knowledge label -->
-          <text x="57" y="90" text-anchor="middle" fill="#c9a84c" font-size="8" font-family="Inter" font-weight="600" opacity=".7">KNOWLEDGE</text>
-          <!-- Awareness label -->
-          <text x="202" y="90" text-anchor="middle" fill="#c9a84c" font-size="8" font-family="Inter" font-weight="600" opacity=".7">AWARENESS</text>
-          <text x="57" y="170" text-anchor="middle" fill="#2ec4b6" font-size="8" font-family="Inter" font-weight="600" opacity=".7">KNOWLEDGE</text>
-          <text x="202" y="170" text-anchor="middle" fill="#2ec4b6" font-size="8" font-family="Inter" font-weight="600" opacity=".7">AWARENESS</text>
-        </svg>
-        <p class="caption">Mapping communicative competence domains to SMCP constructs</p>
-      </div>
-    </div>
+  <div class="slide-body">
+    <ul class="points">
+      <li>Anchored on <strong>Canale &amp; Swain's (1980) Communicative Competence Theory</strong> and <strong>Celce-Murcia's (2007)</strong> model.</li>
+      <li><span class="tag gold">Grammatical</span> Knowledge of vocabulary, morphology, and syntax.</li>
+      <li><span class="tag gold">Sociolinguistic</span> Understanding social context and safety purpose.</li>
+      <li><span class="tag teal">Discourse</span> Coherent operational text exchanges.</li>
+      <li><span class="tag teal">Strategic</span> Compensatory repair strategies under pressure.</li>
+    </ul>
   </div>
   <div class="transition-line">From these theoretical foundations, we move to the core research variables and problem structure.</div>
   <button class="notes-toggle" onclick="toggleNotes(this)">Show Speaker Notes</button>
   <div class="speaker-notes hidden">
-    <strong>Speaker Notes:</strong> Our study anchors on Canale and Swain's Communicative Competence theory, linking grammatical and strategic language skills directly to safe ship handling and error recovery. Knowledge of SMCP reflects grammatical and discourse competencies, while Awareness aligns with sociolinguistic and strategic competencies.
+    <strong>Speaker Notes:</strong> Our study anchors on Canale and Swain's Communicative Competence theory, linking grammatical and strategic language skills directly to safe ship handling and error recovery.
   </div>
 </div>
 
@@ -540,54 +395,21 @@
     <span class="slide-number">SLIDE 05</span>
     <h2>Statement of the Problem: Knowledge Domains</h2>
   </div>
-  <div class="slide-body col-2">
-    <div class="col">
-      <p style="font-size:14px;color:var(--gray);margin-bottom:18px;line-height:1.6;">
-        <strong style="color:var(--white);">Research Question&nbsp;1:</strong> What is the level of <em>knowledge</em> of third-year BSMT students regarding SMCP?
-      </p>
-      <ul class="points">
-        <li><span class="tag gold">1.1</span> <strong>Purpose &amp; Function</strong> — Understanding why SMCP exists and its intended role in maritime safety communications.</li>
-        <li><span class="tag gold">1.2</span> <strong>Meaning &amp; Recognition</strong> — Ability to identify and interpret selected standard maritime phrases and message markers.</li>
-        <li><span class="tag gold">1.3</span> <strong>SMCP-Related Terminology</strong> — Familiarity with specialized vocabulary, including standard instructions, warnings, and procedural language.</li>
-        <li><span class="tag gold">1.4</span> <strong>Situational Application</strong> — Correct use of SMCP in basic maritime communication scenarios (e.g., VHF exchanges, bridge watchkeeping).</li>
-      </ul>
-    </div>
-    <div class="col">
-      <div class="visual-card" style="padding:20px;">
-        <svg width="240" height="240" viewBox="0 0 240 240" fill="none">
-          <!-- Domain 1 -->
-          <rect x="10" y="10" width="105" height="100" rx="10" fill="var(--navy)" stroke="#c9a84c" stroke-width=".8"/>
-          <text x="62" y="38" text-anchor="middle" fill="#c9a84c" font-size="28" font-family="Playfair Display" font-weight="900">1.1</text>
-          <text x="62" y="58" text-anchor="middle" fill="var(--white)" font-size="10" font-family="Inter" font-weight="600">Purpose &amp;</text>
-          <text x="62" y="72" text-anchor="middle" fill="var(--white)" font-size="10" font-family="Inter" font-weight="600">Function</text>
-          <text x="62" y="96" text-anchor="middle" fill="var(--gray)" font-size="7.5" font-family="Inter">Why does SMCP exist?</text>
-          <!-- Domain 2 -->
-          <rect x="125" y="10" width="105" height="100" rx="10" fill="var(--navy)" stroke="#c9a84c" stroke-width=".8"/>
-          <text x="177" y="38" text-anchor="middle" fill="#c9a84c" font-size="28" font-family="Playfair Display" font-weight="900">1.2</text>
-          <text x="177" y="58" text-anchor="middle" fill="var(--white)" font-size="10" font-family="Inter" font-weight="600">Meaning &amp;</text>
-          <text x="177" y="72" text-anchor="middle" fill="var(--white)" font-size="10" font-family="Inter" font-weight="600">Recognition</text>
-          <text x="177" y="96" text-anchor="middle" fill="var(--gray)" font-size="7.5" font-family="Inter">Phrase identification</text>
-          <!-- Domain 3 -->
-          <rect x="10" y="120" width="105" height="100" rx="10" fill="var(--navy)" stroke="#2ec4b6" stroke-width=".8"/>
-          <text x="62" y="148" text-anchor="middle" fill="#2ec4b6" font-size="28" font-family="Playfair Display" font-weight="900">1.3</text>
-          <text x="62" y="168" text-anchor="middle" fill="var(--white)" font-size="10" font-family="Inter" font-weight="600">SMCP</text>
-          <text x="62" y="182" text-anchor="middle" fill="var(--white)" font-size="10" font-family="Inter" font-weight="600">Terminology</text>
-          <text x="62" y="206" text-anchor="middle" fill="var(--gray)" font-size="7.5" font-family="Inter">Specialized vocabulary</text>
-          <!-- Domain 4 -->
-          <rect x="125" y="120" width="105" height="100" rx="10" fill="var(--navy)" stroke="#2ec4b6" stroke-width=".8"/>
-          <text x="177" y="148" text-anchor="middle" fill="#2ec4b6" font-size="28" font-family="Playfair Display" font-weight="900">1.4</text>
-          <text x="177" y="168" text-anchor="middle" fill="var(--white)" font-size="10" font-family="Inter" font-weight="600">Situational</text>
-          <text x="177" y="182" text-anchor="middle" fill="var(--white)" font-size="10" font-family="Inter" font-weight="600">Application</text>
-          <text x="177" y="206" text-anchor="middle" fill="var(--gray)" font-size="7.5" font-family="Inter">Bridge &amp; VHF scenarios</text>
-        </svg>
-        <p class="caption">Four objective knowledge sub-domains assessed via multiple-choice test</p>
-      </div>
-    </div>
+  <div class="slide-body">
+    <p style="font-size:17px;color:var(--gray);margin-bottom:16px;line-height:1.4;">
+      <strong style="color:var(--white);">Research Question 1:</strong> What is the level of <em>knowledge</em> of third-year BSMT students regarding SMCP?
+    </p>
+    <ul class="points">
+      <li><span class="tag gold">1.1</span> <strong>Purpose &amp; Function</strong> — Understanding why SMCP exists and its intended role in maritime safety.</li>
+      <li><span class="tag gold">1.2</span> <strong>Meaning &amp; Recognition</strong> — Ability to identify and interpret selected standard maritime phrases.</li>
+      <li><span class="tag gold">1.3</span> <strong>Terminology</strong> — Familiarity with specialized vocabulary, instructions, and warnings.</li>
+      <li><span class="tag gold">1.4</span> <strong>Situational Application</strong> — Correct application of SMCP in basic operational scenarios.</li>
+    </ul>
   </div>
   <div class="transition-line">Alongside objective knowledge, the study evaluates student self-reported awareness constructs.</div>
   <button class="notes-toggle" onclick="toggleNotes(this)">Show Speaker Notes</button>
   <div class="speaker-notes hidden">
-    <strong>Speaker Notes:</strong> The first major part of our problem statement evaluates objective knowledge across four domains: purpose, phrase recognition, technical terminology, and situational bridge application. These are measured through an objective multiple-choice knowledge test.
+    <strong>Speaker Notes:</strong> The first part of our problem statement evaluates objective knowledge across four domains: purpose, phrase recognition, technical terminology, and situational bridge application.
   </div>
 </div>
 
@@ -599,214 +421,184 @@
     <span class="slide-number">SLIDE 06</span>
     <h2>Statement of the Problem: Awareness Constructs</h2>
   </div>
-  <div class="slide-body col-1">
-    <p style="font-size:14px;color:var(--gray);margin-bottom:22px;line-height:1.6;">
-      <strong style="color:var(--white);">Research Question&nbsp;2:</strong> What is the level of <em>awareness</em> of third-year BSMT students regarding SMCP?
+  <div class="slide-body">
+    <p style="font-size:17px;color:var(--gray);margin-bottom:16px;line-height:1.4;">
+      <strong style="color:var(--white);">Research Question 2:</strong> What is the level of <em>awareness</em> of third-year BSMT students regarding SMCP?
     </p>
-    <div class="pillars">
-      <div class="pillar">
-        <div class="pillar-icon">
-          <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-            <circle cx="24" cy="24" r="22" stroke="#c9a84c" stroke-width="1" fill="var(--gold-dim)"/>
-            <path d="M14 24 H34 M24 14 V34" stroke="#c9a84c" stroke-width="1.5"/>
-            <circle cx="24" cy="24" r="6" stroke="#c9a84c" stroke-width=".8" fill="none"/>
-          </svg>
-        </div>
-        <span class="tag gold" style="margin-bottom:8px;">2.1</span>
-        <h4>Standardization Role</h4>
-        <p>Students' perceived awareness of SMCP's role in establishing a universal communication standard across multinational maritime operations.</p>
-      </div>
-      <div class="pillar">
-        <div class="pillar-icon">
-          <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-            <circle cx="24" cy="24" r="22" stroke="#2ec4b6" stroke-width="1" fill="var(--teal-dim)"/>
-            <path d="M24 10 L24 28 L32 34" stroke="#2ec4b6" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-            <circle cx="24" cy="24" r="3" fill="#2ec4b6" opacity=".4"/>
-          </svg>
-        </div>
-        <span class="tag teal" style="margin-bottom:8px;">2.2</span>
-        <h4>Navigational Safety</h4>
-        <p>Recognition of the direct relevance of SMCP to safe navigational communication — preventing collisions, groundings, and operational errors.</p>
-      </div>
-      <div class="pillar">
-        <div class="pillar-icon">
-          <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-            <circle cx="24" cy="24" r="22" stroke="#c9a84c" stroke-width="1" fill="var(--gold-dim)"/>
-            <path d="M24 12 V8 M18 14 L16 10 M30 14 L32 10" stroke="#c9a84c" stroke-width="1" stroke-linecap="round"/>
-            <rect x="14" y="18" width="20" height="20" rx="3" stroke="#c9a84c" stroke-width="1" fill="none"/>
-            <line x1="18" y1="25" x2="30" y2="25" stroke="#c9a84c" stroke-width=".6" opacity=".5"/>
-            <line x1="18" y1="30" x2="26" y2="30" stroke="#c9a84c" stroke-width=".6" opacity=".5"/>
-          </svg>
-        </div>
-        <span class="tag gold" style="margin-bottom:8px;">2.3</span>
-        <h4>Shipboard Duties</h4>
-        <p>Perceptions regarding the relevance of SMCP to future shipboard responsibilities, particularly watchkeeping and bridge team coordination.</p>
-      </div>
-    </div>
-    <div style="margin-top:22px; background:var(--navy-light); border-radius:8px; padding:16px 24px; border:1px solid rgba(201,168,76,0.08);">
-      <p style="font-size:13px;color:var(--gray);line-height:1.6;">
-        <strong style="color:var(--gold-light);">Measurement:</strong> Self-reported via a <strong style="color:var(--white);">4-point Likert scale</strong> measuring students' recognition of role, regulatory importance, and professional relevance. Delimited to enrolled 3rd-year BSMT cadets prior to sea deployment.
-      </p>
-    </div>
+    <ul class="points">
+      <li><span class="tag teal">2.1</span> <strong>Role in Standardization</strong> — Perceived awareness of SMCP's function across multilingual bridge teams.</li>
+      <li><span class="tag teal">2.2</span> <strong>Safety Relevance</strong> — Recognition of direct links to safe navigational communication and error prevention.</li>
+      <li><span class="tag teal">2.3</span> <strong>Shipboard Responsibilities</strong> — Understanding professional relevance to upcoming watchkeeping duties.</li>
+    </ul>
   </div>
   <div class="transition-line">To ensure clarity and precision, the scope, boundaries, and terms of the study are strictly defined.</div>
   <button class="notes-toggle" onclick="toggleNotes(this)">Show Speaker Notes</button>
   <div class="speaker-notes hidden">
-    <strong>Speaker Notes:</strong> The second part of the problem statement assesses awareness — measuring how well cadets perceive the importance of standardization, navigational safety, and their upcoming shipboard responsibilities. This is captured through a 4-point Likert scale survey.
+    <strong>Speaker Notes:</strong> The second part of the problem statement assesses awareness—measuring how well cadets perceive the importance of standardization, safety, and their upcoming shipboard responsibilities.
   </div>
 </div>
 
 <!-- ══════════════════════════════════════════════════════════════ -->
-<!-- SLIDE 7 — SCOPE, DELIMITATIONS & DEFINITIONS -->
+<!-- SLIDE 7 — SCOPE & DEFINITION OF TERMS -->
 <!-- ══════════════════════════════════════════════════════════════ -->
 <div class="slide" id="slide7">
   <div class="slide-header">
     <span class="slide-number">SLIDE 07</span>
-    <h2>Scope, Delimitations &amp; Definition of Terms</h2>
+    <h2>Scope, Delimitations, and Definition of Terms</h2>
   </div>
-  <div class="slide-body col-2">
-    <div class="col">
-      <p style="font-size:13px; color:var(--gold-light); font-weight:600; text-transform:uppercase; letter-spacing:1.5px; margin-bottom:16px;">Scope &amp; Delimitations</p>
-      <ul class="points">
-        <li><strong>Population:</strong> Enrolled 3rd-year BSMT students at UCLM, Academic Year 2026–2027.</li>
-        <li><strong>Exclusions:</strong> BSMarE students, lower-year BSMT students, and cadets already deployed onboard.</li>
-        <li><strong>Methodological Boundary:</strong> Assesses theoretical/cognitive understanding via written instruments only — excludes live acoustic transmission, voice intonation, and bridge simulator performance.</li>
-        <li><strong>Descriptive Design:</strong> No statistical hypothesis is tested; the study measures baseline levels of knowledge and awareness.</li>
-      </ul>
-    </div>
-    <div class="col">
-      <p style="font-size:13px; color:var(--gold-light); font-weight:600; text-transform:uppercase; letter-spacing:1.5px; margin-bottom:16px;">Key Operational Definitions</p>
-      <div style="display:flex;flex-direction:column;gap:14px;">
-        <div style="background:var(--navy-light);border-radius:8px;padding:14px 18px;border-left:3px solid var(--gold);">
-          <h4 style="font-size:13px;color:var(--gold);margin-bottom:4px;">Knowledge of SMCP</h4>
-          <p style="font-size:12.5px;color:rgba(244,244,246,0.78);line-height:1.55;">Measured through objective test scores on a multiple-choice instrument covering SMCP functions, message markers, terminology, and situational phrases.</p>
-        </div>
-        <div style="background:var(--navy-light);border-radius:8px;padding:14px 18px;border-left:3px solid var(--teal);">
-          <h4 style="font-size:13px;color:var(--teal);margin-bottom:4px;">Awareness of SMCP</h4>
-          <p style="font-size:12.5px;color:rgba(244,244,246,0.78);line-height:1.55;">Self-reported score on a 4-point Likert scale measuring recognition of the role, regulatory importance, and professional relevance of SMCP.</p>
-        </div>
-        <div style="background:var(--navy-light);border-radius:8px;padding:14px 18px;border-left:3px solid var(--gold);">
-          <h4 style="font-size:13px;color:var(--gold);margin-bottom:4px;">SMCP</h4>
-          <p style="font-size:12.5px;color:rgba(244,244,246,0.78);line-height:1.55;">Standardized safety language under IMO Resolution A.918(22) for ship-to-ship, ship-to-shore, and onboard communications.</p>
-        </div>
-        <div style="background:var(--navy-light);border-radius:8px;padding:14px 18px;border-left:3px solid var(--teal);">
-          <h4 style="font-size:13px;color:var(--teal);margin-bottom:4px;">3rd-Year BSMT Students</h4>
-          <p style="font-size:12.5px;color:rgba(244,244,246,0.78);line-height:1.55;">Officially enrolled third-year students who have completed preparatory Maritime English and Maritime Communications coursework at UCLM.</p>
-        </div>
+  <div class="slide-body">
+    <div class="clean-grid-2">
+      <div class="clean-col">
+        <h4>Scope &amp; Delimitations</h4>
+        <ul class="points">
+          <li><strong>Population:</strong> Enrolls 3rd-year BSMT students at UCLM for AY 2026–2027; excludes BSMarE.</li>
+          <li><strong>Methodology:</strong> Assesses cognitive understanding via written test instruments.</li>
+          <li><strong>Exclusion:</strong> Excludes live acoustic transmission or simulator voice evaluation.</li>
+        </ul>
+      </div>
+      <div class="clean-col">
+        <h4>Operational Terms</h4>
+        <ul class="points">
+          <li><strong>Knowledge:</strong> Objective score on test domains.</li>
+          <li><strong>Awareness:</strong> 4-point Likert scale self-reporting.</li>
+          <li><strong>SMCP:</strong> Standard safety language under IMO Resolution A.918(22).</li>
+        </ul>
       </div>
     </div>
   </div>
-  <div class="transition-line">Finally, we examine the practical significance and stakeholder benefits of these findings.</div>
+  <div class="transition-line">Finally, we review the practical significance and stakeholder benefits of these findings.</div>
   <button class="notes-toggle" onclick="toggleNotes(this)">Show Speaker Notes</button>
   <div class="speaker-notes hidden">
-    <strong>Speaker Notes:</strong> Our scope focuses exclusively on third-year BSMT cadets at UCLM via written instruments, setting aside live acoustic simulator tests. Knowledge is measured objectively while awareness is self-reported. Key terms are operationally defined to ensure measurement precision.
+    <strong>Speaker Notes:</strong> Our scope focuses exclusively on third-year BSMT cadets at UCLM via written instruments, setting aside live acoustic simulator tests. Key terms are operationally defined.
   </div>
 </div>
 
 <!-- ══════════════════════════════════════════════════════════════ -->
-<!-- SLIDE 8 — SIGNIFICANCE & CLOSING -->
+<!-- SLIDE 8 — SIGNIFICANCE -->
 <!-- ══════════════════════════════════════════════════════════════ -->
 <div class="slide" id="slide8">
   <div class="slide-header">
     <span class="slide-number">SLIDE 08</span>
     <h2>Significance of the Study &amp; Practical Implications</h2>
   </div>
-  <div class="slide-body col-1">
-    <div class="stake-grid">
-      <div class="stake-card" style="border-left:3px solid var(--gold);">
-        <h4>⚓ BSMT Students</h4>
-        <p>Provides <strong>objective self-assessment data</strong> regarding current SMCP competence, highlighting specific vocabulary and application deficiencies prior to entering mandatory shipboard cadetship.</p>
+  <div class="slide-body">
+    <div class="clean-grid">
+      <div class="clean-col">
+        <h4>BSMT Students</h4>
+        <p>Provides objective self-assessment data prior to mandatory shipboard cadetship.</p>
       </div>
-      <div class="stake-card" style="border-left:3px solid var(--teal);">
-        <h4>📋 Maritime Instructors &amp; English Faculty</h4>
-        <p>Supplies <strong>diagnostic data</strong> to adjust pedagogical strategies, design scenario-based simulation scripts, and bridge the gap between theoretical English coursework and practical VHF/bridge watchkeeping communication.</p>
+      <div class="clean-col">
+        <h4>Faculty &amp; Instructors</h4>
+        <p>Supplies diagnostic data to refine simulation scripts and bridge theory to practice.</p>
       </div>
-      <div class="stake-card" style="border-left:3px solid var(--gold);">
-        <h4>🏫 University Administration (UCLM)</h4>
-        <p>Serves as <strong>empirical baseline evidence</strong> for evaluating the effectiveness of current Maritime Communications (MarCom) and Maritime English instructional modules against CHED-MARINA standards.</p>
+      <div class="clean-col">
+        <h4>Administration &amp; Industry</h4>
+        <p>Serves as baseline evidence for curriculum review and ensures safer multi-ethnic bridge teams.</p>
       </div>
-      <div class="stake-card" style="border-left:3px solid var(--teal);">
-        <h4>🚢 Maritime Industry &amp; Manning Agencies</h4>
-        <p>Identifies <strong>training gaps at the pre-sea phase</strong>, supporting the industry's demand for deck cadets who can readily adapt to multi-ethnic bridge teams with minimal communication risk.</p>
-      </div>
-    </div>
-    <div class="stake-grid" style="grid-template-columns:1fr;margin-top:18px;">
-      <div class="stake-card" style="border-left:3px solid rgba(201,168,76,0.5);background:rgba(201,168,76,0.04);">
-        <h4>📚 Future Researchers</h4>
-        <p>Contributes <strong>localized Philippine empirical data</strong> to the literature on Maritime English and provides a reference framework for comparative studies across maritime academies and programs.</p>
-      </div>
-    </div>
-    <!-- Conceptual Framework reference -->
-    <div style="margin-top:18px;padding:16px 20px;background:var(--navy-light);border-radius:8px;border:1px solid rgba(201,168,76,0.1);">
-      <p style="font-size:12px;color:var(--gray);line-height:1.55;text-align:center;">
-        <strong style="color:var(--gold-light);">Conceptual Flow (IPO):</strong> &nbsp;
-        <span class="tag gold">INPUT</span> Profile of 3rd-Year BSMT Students &amp; Target Constructs &nbsp;→&nbsp;
-        <span class="tag teal">PROCESS</span> Knowledge Test &amp; Awareness Survey &nbsp;→&nbsp;
-        <span class="tag gold">OUTPUT</span> Baseline Assessment &amp; Gap Identification
-      </p>
     </div>
   </div>
-
-  <!-- Thank you bar -->
-  <div style="background:linear-gradient(90deg,var(--gold-dim),transparent);padding:18px 52px;border-top:1px solid rgba(201,168,76,0.15);display:flex;align-items:center;justify-content:space-between;">
-    <p style="font-size:16px;color:var(--gold);font-family:'Playfair Display',serif;font-weight:700;">Thank you for your attention.</p>
-    <p style="font-size:13px;color:var(--gray);">We are ready for your questions and suggestions.</p>
-  </div>
-
+  <div class="transition-line">Thank you for your attention. We are ready for your questions and suggestions.</div>
   <button class="notes-toggle" onclick="toggleNotes(this)">Show Speaker Notes</button>
   <div class="speaker-notes hidden">
-    <strong>Speaker Notes:</strong> The study benefits students through self-assessment data, faculty through instructional refinement, UCLM administration through empirical curriculum review, and manning agencies through better-prepared cadets. Thank you for your attention. We are ready for your questions and suggestions.
+    <strong>Speaker Notes:</strong> The study benefits students through self-assessment, faculty through instructional refinement, UCLM administration through empirical curriculum review, and manning agencies through better-prepared cadets.
   </div>
 </div>
 
 </div><!-- /deck -->
 
 <script>
-  // Scroll-to-slide navigation
-  function scrollToSlide(n) {
-    const el = document.getElementById('slide' + n);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
-  // Toggle speaker notes
   function toggleNotes(btn) {
     const notes = btn.nextElementSibling;
-    if (notes) {
-      notes.classList.toggle('hidden');
-      btn.textContent = notes.classList.contains('hidden') ? 'Show Speaker Notes' : 'Hide Speaker Notes';
+    if(notes.classList.contains('hidden')) {
+      notes.classList.remove('hidden');
+      btn.textContent = 'Hide Speaker Notes';
+    } else {
+      notes.classList.add('hidden');
+      btn.textContent = 'Show Speaker Notes';
     }
   }
 
-  // Update active button & counter on scroll
-  const slides = document.querySelectorAll('.slide');
-  const navBtns = document.querySelectorAll('.topbar-nav button');
-  const counter = document.getElementById('currentSlide');
+  let currentSlideIndex = 1;
+  const totalSlides = 8;
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const id = entry.target.id;
-        const num = parseInt(id.replace('slide', ''));
-        counter.textContent = num;
-        navBtns.forEach((btn, i) => {
-          btn.classList.toggle('active', i === num - 1);
+  function scrollToSlide(num) {
+    currentSlideIndex = num;
+    const el = document.getElementById('slide' + num);
+    if(el) {
+      el.scrollIntoView({behavior: 'smooth'});
+    }
+  }
+
+  function toggleFullscreen() {
+    const fsBtn = document.getElementById('fsBtn');
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().then(() => {
+        fsBtn.textContent = '☒ Exit Fullscreen';
+      }).catch(err => {
+        alert(`Error attempting to enable fullscreen mode: ${err.message}`);
+      });
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen().then(() => {
+          fsBtn.textContent = '⛶ Fullscreen';
         });
       }
+    }
+  }
+
+  // Keyboard navigation: Arrow Up/Down or PageUp/PageDown, and 'F' key for Fullscreen
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'f' || e.key === 'F') {
+      if (document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+        toggleFullscreen();
+      }
+    } else if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === 'ArrowRight') {
+      e.preventDefault();
+      if (currentSlideIndex < totalSlides) {
+        scrollToSlide(currentSlideIndex + 1);
+      }
+    } else if (e.key === 'ArrowUp' || e.key === 'PageUp' || e.key === 'ArrowLeft') {
+      e.preventDefault();
+      if (currentSlideIndex > 1) {
+        scrollToSlide(currentSlideIndex - 1);
+      }
+    }
+  });
+
+  document.addEventListener('fullscreenchange', () => {
+    const fsBtn = document.getElementById('fsBtn');
+    if (!document.fullscreenElement) {
+      fsBtn.textContent = '⛶ Fullscreen';
+    } else {
+      fsBtn.textContent = '☒ Exit Fullscreen';
+    }
+  });
+
+  // Update active nav button and counter on scroll/snap
+  const deckContainer = document.getElementById('deckContainer');
+  const slides = document.querySelectorAll('.slide');
+  const counterEl = document.getElementById('currentSlide');
+
+  deckContainer.addEventListener('scroll', () => {
+    let index = 0;
+    slides.forEach((slide, i) => {
+      const rect = slide.getBoundingClientRect();
+      if(rect.top <= 100 && rect.bottom >= 100) {
+        index = i + 1;
+      }
     });
-  }, { threshold: 0.35 });
-
-  slides.forEach(s => observer.observe(s));
-
-  // Keyboard navigation
-  document.addEventListener('keydown', (e) => {
-    const current = parseInt(counter.textContent);
-    if ((e.key === 'ArrowDown' || e.key === 'ArrowRight') && current < 8) {
-      scrollToSlide(current + 1);
-    } else if ((e.key === 'ArrowUp' || e.key === 'ArrowLeft') && current > 1) {
-      scrollToSlide(current - 1);
+    if(index > 0) {
+      currentSlideIndex = index;
+      counterEl.textContent = index;
+      document.querySelectorAll('.topbar-nav button').forEach((btn, i) => {
+        if(i + 1 === index) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
     }
   });
 </script>
-
 </body>
 </html>
