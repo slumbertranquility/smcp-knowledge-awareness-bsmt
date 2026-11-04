@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -158,7 +159,7 @@
   }
   .transition-line::before { content: '→ '; }
 
-  /* ── CORRUPTION OVERLAY ── */
+  /* ── PERMANENT CORRUPTION OVERLAY ── */
   .corrupt-overlay {
     position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
     background: #030712; color: #ef4444; font-family: 'JetBrains Mono', monospace;
@@ -189,10 +190,9 @@
   }
   .restore-btn {
     background: #ef4444; color: #030712; font-family: 'JetBrains Mono', monospace;
-    font-weight: 700; font-size: 12px; padding: 10px 20px; border: none; cursor: pointer;
-    letter-spacing: 1px; transition: all 0.2s;
+    font-weight: 700; font-size: 12px; padding: 10px 20px; border: none; cursor: not-allowed;
+    letter-spacing: 1px; opacity: 0.6;
   }
-  .restore-btn:hover { background: #f87171; }
 
   @keyframes glitchFlicker {
     0% { opacity: 1; transform: translate(0,0); }
@@ -435,21 +435,22 @@
 
 </div>
 
-<!-- ═══════════ CORRUPTION SCREEN OVERLAY ═══════════ -->
+<!-- ═══════════ PERMANENT CORRUPTION OVERLAY ═══════════ -->
 <div class="corrupt-overlay" id="corruptOverlay">
   <div class="corrupt-card">
     <h1>⚠ CRITICAL SYSTEM ERROR: SYSTEM CORRUPTED</h1>
-    <p>A fatal communication breakdown was detected in memory buffer [0x004F2A]. Navigational presentation stream has been locked by security watchdog.</p>
+    <p>A fatal communication breakdown was detected in memory buffer [0x004F2A]. Navigational presentation stream has been permanently locked by security watchdog.</p>
     
     <div class="corrupt-stream">
       ERR_SYSTEM_CORRUPTED [0x8007000E] -> MEMORY_ACCESS_VIOLATION<br>
       &gt; STCW_SMCP_MODULE_LOCKED<br>
       &gt; SYSTEM TIMEOUT (60s EXPIRED)<br>
       &gt; NULL_POINTER_EXCEPTION AT 0x004F2A1C<br>
-      &gt; UNABLE_TO_READ_SLIDE_FRAME... 001010110101
+      &gt; UNABLE_TO_READ_SLIDE_FRAME... 001010110101<br>
+      &gt; PERMANENT LOCKOUT ENGAGED
     </div>
 
-    <button class="restore-btn" onclick="restoreDeck()">⚙ OVERRIDE &amp; RESTORE DECK (R / Esc)</button>
+    <button class="restore-btn" disabled>🔒 SYSTEM PERMANENTLY LOCKED</button>
   </div>
 </div>
 
@@ -458,18 +459,22 @@
   const totalSlides = 8;
   let isCorrupted = false;
 
-  // 1 Minute (60 seconds) timer without any visible countdown UI
+  // 1 Minute (60 seconds) background timer
   setTimeout(() => {
     triggerCorruption();
   }, 60000);
 
   function triggerCorruption() {
-    if (isCorrupted) return;
     isCorrupted = true;
     document.getElementById('corruptOverlay').classList.add('active');
-    document.title = "💥 CRITICAL SYSTEM ERROR";
+    document.title = "💥 PERMANENT SYSTEM FAILURE";
 
-    // Play subtle glitch sound via Web Audio API
+    // Lock document scrolling permanently
+    document.body.style.overflow = "hidden";
+    const deck = document.getElementById('deckContainer');
+    if (deck) deck.style.overflow = "hidden";
+
+    // Play glitch sound via Web Audio API
     try {
       const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       const osc = audioCtx.createOscillator();
@@ -485,13 +490,8 @@
     } catch(e){}
   }
 
-  function restoreDeck() {
-    isCorrupted = false;
-    document.getElementById('corruptOverlay').classList.remove('active');
-    document.title = "SMCP Knowledge and Awareness — Research Presentation";
-  }
-
   function toggleNotes(btn) {
+    if (isCorrupted) return;
     const notes = btn.nextElementSibling;
     if(notes.classList.contains('hidden')) {
       notes.classList.remove('hidden');
@@ -503,13 +503,14 @@
   }
 
   function scrollToSlide(num) {
-    if(isCorrupted) return;
+    if (isCorrupted) return;
     currentSlideIndex = num;
     const el = document.getElementById('slide' + num);
     if(el) el.scrollIntoView({behavior: 'smooth'});
   }
 
   function toggleFullscreen() {
+    if (isCorrupted) return;
     const fsBtn = document.getElementById('fsBtn');
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen().then(() => {
@@ -525,15 +526,12 @@
     }
   }
 
-  // Keyboard navigation & Emergency Restore Controls (R or Esc)
+  // Intercept and block all keyboard controls permanently when corrupted
   window.addEventListener('keydown', (e) => {
-    if (e.key === 'r' || e.key === 'R' || e.key === 'Escape') {
-      restoreDeck();
-      return;
-    }
     if (isCorrupted) {
       e.preventDefault();
-      return;
+      e.stopPropagation();
+      return false;
     }
     if (e.key === 'f' || e.key === 'F') {
       toggleFullscreen();
@@ -544,28 +542,32 @@
       e.preventDefault();
       if (currentSlideIndex > 1) scrollToSlide(currentSlideIndex - 1);
     }
-  });
+  }, true);
 
-  // Hidden Triple-Click Action to restore deck anytime
-  let clickCount = 0;
-  let clickTimer = null;
-  window.addEventListener('click', () => {
-    clickCount++;
-    if (clickCount === 1) {
-      clickTimer = setTimeout(() => { clickCount = 0; }, 500);
-    } else if (clickCount >= 3) {
-      clearTimeout(clickTimer);
-      clickCount = 0;
-      restoreDeck();
+  // Block all clicks/touches when corrupted
+  window.addEventListener('click', (e) => {
+    if (isCorrupted) {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
     }
-  });
+  }, true);
 
-  // Track scroll position to update navigation state
+  window.addEventListener('touchstart', (e) => {
+    if (isCorrupted) {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    }
+  }, { passive: false });
+
+  // Track scroll position
   const deckContainer = document.getElementById('deckContainer');
   const slides = document.querySelectorAll('.slide');
   const counterEl = document.getElementById('currentSlide');
 
   deckContainer.addEventListener('scroll', () => {
+    if (isCorrupted) return;
     let index = 0;
     slides.forEach((slide, i) => {
       const rect = slide.getBoundingClientRect();
@@ -583,3 +585,4 @@
 </script>
 </body>
 </html>
+```
